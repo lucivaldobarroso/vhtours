@@ -21,12 +21,12 @@
         <div class="login-box">
             <h2 style="color: var(--primary-color); margin-bottom: 20px;">Acceso Empleados</h2>
             <div class="form-group" style="margin-bottom: 15px;">
-                <input type="text" id="adminUser" placeholder="Usuario">
+                <input type="text" id="user" placeholder="Usuario">
             </div>
             <div class="form-group" style="margin-bottom: 20px;">
-                <input type="password" id="adminPass" placeholder="Contraseña">
+                <input type="password" id="pass" placeholder="Contraseña">
             </div>
-            <button class="btn btn-primary" style="width: 100%;" onclick="attemptLogin()">Entrar</button>
+            <button class="btn btn-primary" style="width: 100%;" onclick="logar()">Entrar</button>
             <p style="margin-top: 15px; font-size: 0.8rem; cursor: pointer; color: #666;" onclick="closeLogin()">
                 Cancelar</p>
         </div>
@@ -36,7 +36,7 @@
 
         <!-- HEADER -->
         <header>
-            <div class="top-bar container">
+            <div class="top-bar container" id="secao-login">
                 <a href="#" onclick="openLogin()">Área del Empleado <i class="fas fa-lock"></i></a>
             </div>
             <nav class="navbar container">
@@ -318,25 +318,47 @@
                 </div>
             </div>
 
-            <div class="admin-card">
+            <div class="admin-card" id="secao-painel">
                 <h3>Gestionar Paquetes</h3>
                 <br>
+                <!-- Campo oculto para saber se estamos editando uma linha -->
+                <input type="hidden" id="input-linha">
+
                 <div class="form-group">
-                    <input type="text" id="newPkgDest" placeholder="Destino (Ej. Miami)">
+                    <input type="text" id="input-destino" placeholder="Destino (Ej. Miami)">
                 </div>
                 <div class="form-group" style="margin-top: 10px;">
-                    <input type="text" id="newPkgPrice" placeholder="Precio (Ej. $500 USD)">
+                    <input type="text" id="input-preco" placeholder="Precio (Ej. $ 500 ou R$ 1000)">
                 </div>
                 <div class="form-group" style="margin-top: 10px;">
-                    <input type="text" id="newPkgImg" placeholder="URL de Imagen">
+                    <input type="text" id="input-url" placeholder="URL de Imagen">
                 </div>
-                <button class="btn btn-primary" style="margin-top: 15px;" onclick="addPackage()">Agregar
-                    Paquete</button>
+                <div class="form-group" style="margin-top: 10px;">
+                    <textarea id="input-desc" placeholder="Descripción del destino"
+                        style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"></textarea>
+                </div>
+
+                <div style="display: flex; gap: 10px; margin-top: 15px;">
+                    <button class="btn btn-primary" id="btn-salvar" onclick="salvarDados()">Salvar na Planilha</button>
+                    <button class="btn btn-accent" onclick="limparFormulario()">Limpar</button>
+                </div>
             </div>
 
             <div class="admin-card">
                 <h3>Paquetes Activos</h3>
-                <div id="admin-pkg-list" style="margin-top: 20px;">
+                <div class="table-responsive" style="margin-top: 20px;">
+                    <table id="tabela-destinos" style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="border-bottom: 2px solid var(--primary-color);">
+                                <th style="text-align: left; padding: 10px;">Destino</th>
+                                <th style="text-align: left; padding: 10px;">Precio</th>
+                                <th style="text-align: left; padding: 10px;">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

@@ -243,9 +243,12 @@ header {
 }
 
 .mission-vision-section {
-    margin-top: -50px; /* Movido de inline */
-    position: relative; /* Movido de inline */
-    z-index: 10; /* Movido de inline */
+    margin-top: -50px;
+    /* Movido de inline */
+    position: relative;
+    /* Movido de inline */
+    z-index: 10;
+    /* Movido de inline */
 }
 
 .search-container {
@@ -270,17 +273,17 @@ header {
 }
 
 .mission-card {
-    flex: 1; 
-    min-width: 300px; 
-    text-align: center; 
+    flex: 1;
+    min-width: 300px;
+    text-align: center;
     padding: 20px;
 }
 
 .vision-card {
-    flex: 1; 
-    min-width: 300px; 
-    text-align: center; 
-    padding: 20px; 
+    flex: 1;
+    min-width: 300px;
+    text-align: center;
+    padding: 20px;
     border-left: 1px solid #eee;
 }
 
@@ -429,9 +432,13 @@ header {
  * ==========================================
  */
 .payment-methods {
-    padding: 50px 0;
+    padding: 80px 0;
     text-align: center;
-    background-color: var(--white);
+    background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('https://images.unsplash.com/photo-1526772662000-3f88f10405ff?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    position: relative;
 }
 
 .payment-icons {
@@ -442,6 +449,15 @@ header {
     color: #555;
     margin-top: 20px;
     flex-wrap: wrap;
+}
+
+.payment-icons a {
+    transition: var(--transition);
+}
+
+.payment-icons a:hover {
+    color: var(--secondary-color);
+    transform: scale(1.2);
 }
 
 footer {
@@ -578,7 +594,8 @@ footer {
 
 /* ADMIN PANEL STYLES */
 #admin-panel {
-    display: none; /* Mantener */
+    display: none;
+    /* Mantener */
     position: fixed;
     top: 0;
     left: 0;
@@ -653,7 +670,7 @@ footer {
     border-radius: 50%;
     width: 40px;
     height: 40px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -737,7 +754,8 @@ footer {
         flex-direction: column;
     }
 
-    .mission-card, .vision-card {
+    .mission-card,
+    .vision-card {
         border: none;
         border-bottom: 1px solid #eee;
     }

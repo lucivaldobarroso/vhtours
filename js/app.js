@@ -2,43 +2,37 @@
  * DATA STORE & RENDER (Paquetes)
  * ==========================================
  */
-// Datos iniciales si LocalStorage está vacío
-const defaultPackages = [
-    { id: 1, dest: "Buenos Aires", price: "$450 USD", img: "https://images.unsplash.com/photo-1589909202802-8f4aadce1849?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" },
-    { id: 2, dest: "Rio de Janeiro", price: "$520 USD", img: "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" },
-    { id: 3, dest: "Santiago", price: "$380 USD", img: "https://images.unsplash.com/photo-1590089415225-401eb6b9850d?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" }
-];
+// --- CONFIGURAÇÃO GOOGLE SHEETS ---
+const URL_API = "https://script.google.com/macros/s/AKfycbwFtAkpo0-e_b20vL9-xMtadTfJZDpMlndWIg30c63SNc8nJEgJ4n_MH83ZQSWFLpq_BA/exec";
 
-function getPackages() {
-    const stored = localStorage.getItem('vh_packages');
-    return stored ? JSON.parse(stored) : defaultPackages;
-}
-
-function savePackages(pkgs) {
-    localStorage.setItem('vh_packages', JSON.stringify(pkgs));
-    renderPackages();
-    renderAdminPackages();
-}
-
-function renderPackages() {
+async function renderPackages() {
     const container = document.getElementById('packages-container');
-    const pkgs = getPackages();
-    // Requires translations and currentLang to be available. 
-    // Ensuring they are defined globally or passed.
-    const btnText = translations[currentLang].pkg_btn;
+    if (!container) return;
 
-    container.innerHTML = pkgs.map(pkg => `
-        <div class="package-card">
-            <div class="pkg-img"><img src="${pkg.img}" alt="${pkg.dest}"></div>
-            <div class="pkg-details">
-                <h3>${pkg.dest}</h3>
-                <p class="pkg-price">${pkg.price}</p>
-                <br>
-                <a href="https://wa.me/559591763272?text=Interesado%20en%20paquete%20a%20${pkg.dest}" target="_blank" class="btn btn-primary">${btnText}</a>
+    try {
+        const res = await fetch(URL_API + "?action=getDestinos");
+        const destinos = await res.json();
+
+        const btnText = translations[currentLang].pkg_btn;
+
+        container.innerHTML = destinos.map(pkg => `
+            <div class="package-card">
+                <div class="pkg-img">
+                    <img src="${pkg['URL DA IMAGEM']}" alt="${pkg.DESTINO}" onerror="this.src='https://via.placeholder.com/600x400?text=Imagen+no+disponible'">
+                </div>
+                <div class="pkg-details">
+                    <h3>${pkg.DESTINO}</h3>
+                    <p class="pkg-price">${pkg.PREÇO}</p>
+                    <p style="font-size: 0.85rem; color: #666; margin-bottom: 15px;">${pkg.DESCRIÇÃO || ''}</p>
+                    <a href="https://wa.me/559591763272?text=Interesado%20en%20paquete%20a%20${pkg.DESTINO}%20por%20${pkg.PREÇO}" target="_blank" class="btn btn-primary">${btnText}</a>
+                </div>
             </div>
-        </div>
-    `).join('');
+        `).join('');
+    } catch (error) {
+        console.error("Erro ao carregar destinos:", error);
+    }
 }
+
 
 /* * ==========================================
  * INSTAGRAM FEED RENDERER
@@ -157,7 +151,7 @@ const translations = {
         pkg_btn: "Ver Oferta",
         map_title: "Nuestra Ubicación",
         whatsapp_cta: "¡No te pierdas nada! Únete al canal y recibe promociones en tiempo real.",
-        footer_copy: "&copy; 2026 Nombre de la Empresa Cliente. Todos los derechos reservados.",
+        footer_copy: "© 2026 Vh Tours Empreendimentos Ltda. CNPJ: 33.662.094/0001-13. All rights reserved.",
         footer_dev: "Desarrollado por",
         chatbot: {
             greeting_options: "Opciones disponibles: <br>- Pasajes/Precio<br>- Dirección/Ubicación<br>- CNPJ<br>- Instagram<br>- WhatsApp<br>- Hablar con Agente<br>- Sobre Nosotros",
@@ -192,7 +186,7 @@ const translations = {
         pkg_btn: "Ver Oferta",
         map_title: "Nossa Localização",
         whatsapp_cta: "Não perca nada! Entre no canal e receba promoções em tempo real.",
-        footer_copy: "&copy; 2026 Nome da Empresa Cliente. All rights reserved.",
+        footer_copy: "© 2026 Vh Tours Empreendimentos Ltda. CNPJ: 33.662.094/0001-13. All rights reserved.",
         footer_dev: "Desenvolvido por",
         chatbot: {
             greeting_options: "Opções disponíveis: <br>- Passagens/Preço<br>- Endereço/Localização<br>- CNPJ<br>- Instagram<br>- WhatsApp<br>- Falar com Agente<br>- Sobre a Empresa",
@@ -227,7 +221,7 @@ const translations = {
         pkg_btn: "View Offer",
         map_title: "Our Location",
         whatsapp_cta: "Don't miss out! Join the channel and receive real-time promotions.",
-        footer_copy: "&copy; 2026 Client Company Name. All rights reserved.",
+        footer_copy: "© 2026 Vh Tours Empreendimentos Ltda. CNPJ: 33.662.094/0001-13. All rights reserved.",
         footer_dev: "Developed by",
         chatbot: {
             greeting_options: "Available options: <br>- Flights/Price<br>- Address/Location<br>- CNPJ<br>- Instagram<br>- WhatsApp<br>- Talk to Agent<br>- About Us",
@@ -280,26 +274,30 @@ function changeLanguage(lang) {
 function openLogin() { document.getElementById('loginModal').style.display = 'flex'; }
 function closeLogin() { document.getElementById('loginModal').style.display = 'none'; }
 
-function attemptLogin() {
-    const u = document.getElementById('adminUser').value;
-    const p = document.getElementById('adminPass').value;
+// --- FUNÇÕES DE LOGIN ---
+async function logar() {
+    const u = document.getElementById('user').value;
+    const p = document.getElementById('pass').value;
 
-    // USUARIO: admin | CONTRASEÑA: 123456
-    if (u === 'admin' && p === '123456') {
-        closeLogin();
-        document.getElementById('public-site').style.display = 'none';
-        document.getElementById('admin-panel').style.display = 'block';
-        renderAdminPackages();
-    } else {
-        alert('Credenciales Incorrectas');
+    try {
+        const res = await fetch(`${URL_API}?action=login&user=${u}&pass=${p}`);
+        const data = await res.json();
+
+        if (data.success) {
+            closeLogin();
+            document.getElementById('public-site').style.display = 'none';
+            document.getElementById('admin-panel').style.display = 'block';
+            carregarTabelaAdmin();
+        } else {
+            alert("Usuário ou senha incorretos!");
+        }
+    } catch (e) {
+        alert("Erro ao tentar fazer login. Verifique sua conexão.");
     }
 }
 
 function logout() {
-    document.getElementById('admin-panel').style.display = 'none';
-    document.getElementById('public-site').style.display = 'block';
-    document.getElementById('adminUser').value = '';
-    document.getElementById('adminPass').value = '';
+    location.reload();
 }
 
 function backToSite() {
@@ -307,43 +305,117 @@ function backToSite() {
     document.getElementById('public-site').style.display = 'block';
 }
 
-/* CRUD PAQUETES */
-function renderAdminPackages() {
-    const list = document.getElementById('admin-pkg-list');
-    const pkgs = getPackages();
-    list.innerHTML = pkgs.map(pkg => `
-        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #ddd; padding:10px 0;">
-            <div>
-                <strong>${pkg.dest}</strong> - ${pkg.price}
-            </div>
-            <button class="btn btn-accent" style="padding:5px 10px; font-size:0.7rem;" onclick="deletePackage(${pkg.id})">Eliminar</button>
-        </div>
-    `).join('');
-}
+// --- FUNÇÕES DE DADOS (ADMIN) ---
+async function carregarTabelaAdmin() {
+    try {
+        const res = await fetch(URL_API + "?action=getDestinos");
+        const destinos = await res.json();
+        const tbody = document.querySelector("#tabela-destinos tbody");
+        if (!tbody) return;
 
-function addPackage() {
-    const dest = document.getElementById('newPkgDest').value;
-    const price = document.getElementById('newPkgPrice').value;
-    const img = document.getElementById('newPkgImg').value || "https://via.placeholder.com/300"; // Fallback image
+        tbody.innerHTML = "";
 
-    if (dest && price) {
-        const pkgs = getPackages();
-        pkgs.push({ id: Date.now(), dest, price, img });
-        savePackages(pkgs);
-        // Clear fields
-        document.getElementById('newPkgDest').value = '';
-        document.getElementById('newPkgPrice').value = '';
-        document.getElementById('newPkgImg').value = '';
-    } else {
-        alert('Complete destino y precio');
+        destinos.forEach(item => {
+            const tr = document.createElement('tr');
+            tr.style.borderBottom = "1px solid #eee";
+
+            // Sanitização simples para evitar quebra no onclick
+            const destinoEsc = item.DESTINO.replace(/'/g, "\\'");
+            const precoEsc = String(item.PREÇO).replace(/'/g, "\\'");
+            const urlEsc = String(item['URL DA IMAGEM']).replace(/'/g, "\\'");
+            const descEsc = (item.DESCRIÇÃO || '').replace(/'/g, "\\'").replace(/\n/g, " ");
+
+            tr.innerHTML = `
+                <td style="padding: 10px;">${item.DESTINO}</td>
+                <td style="padding: 10px;">${item.PREÇO}</td>
+                <td style="padding: 10px;">
+                    <button class="btn btn-primary" style="padding: 5px 10px; font-size: 0.7rem; margin-right: 5px;"
+                        onclick="prepararEdicao('${item.linhaOriginal}', '${destinoEsc}', '${precoEsc}', '${urlEsc}', '${descEsc}')">Editar</button>
+                    <button class="btn btn-accent" style="padding: 5px 10px; font-size: 0.7rem;" onclick="excluirDestino('${item.linhaOriginal}')">Excluir</button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+    } catch (e) {
+        console.error("Erro ao carregar tabela admin:", e);
     }
 }
 
-function deletePackage(id) {
-    if (confirm('¿Eliminar paquete?')) {
-        const pkgs = getPackages().filter(p => p.id !== id);
-        savePackages(pkgs);
+async function salvarDados() {
+    const linha = document.getElementById('input-linha').value;
+    const acao = linha ? "editar" : "adicionar";
+
+    const corpo = {
+        action: acao,
+        linha: parseInt(linha),
+        destino: document.getElementById('input-destino').value,
+        preco: document.getElementById('input-preco').value,
+        urlImagem: document.getElementById('input-url').value,
+        descricao: document.getElementById('input-desc').value
+    };
+
+    if (!corpo.destino || !corpo.preco) {
+        alert("Por favor, preencha pelo menos o destino e o preço.");
+        return;
     }
+
+    try {
+        const res = await fetch(URL_API, {
+            method: 'POST',
+            body: JSON.stringify(corpo)
+        });
+        const result = await res.json();
+        if (result.success) {
+            alert("Sucesso! O site já foi atualizado na internet.");
+            limparFormulario();
+            carregarTabelaAdmin();
+            renderPackages();
+        }
+    } catch (e) {
+        // Envio bem-sucedido mesmo com erro de CORS no redirecionamento do Google
+        alert("Solicitação enviada! Verifique se os dados foram atualizados.");
+        limparFormulario();
+        carregarTabelaAdmin();
+        renderPackages();
+    }
+}
+
+async function excluirDestino(numLinha) {
+    if (!confirm("Tem certeza que deseja apagar este item do site?")) return;
+
+    try {
+        const res = await fetch(URL_API, {
+            method: 'POST',
+            body: JSON.stringify({ action: "excluir", linha: parseInt(numLinha) })
+        });
+        const result = await res.json();
+        if (result.success) {
+            carregarTabelaAdmin();
+            renderPackages();
+        }
+    } catch (e) {
+        alert("Solicitação de exclusão enviada!");
+        carregarTabelaAdmin();
+        renderPackages();
+    }
+}
+
+function prepararEdicao(linha, nome, preco, url, desc) {
+    document.getElementById('input-linha').value = linha;
+    document.getElementById('input-destino').value = nome;
+    document.getElementById('input-preco').value = preco;
+    document.getElementById('input-url').value = url;
+    document.getElementById('input-desc').value = desc === 'undefined' ? '' : desc;
+    document.getElementById('btn-salvar').innerText = "Atualizar Dados";
+}
+
+function limparFormulario() {
+    document.getElementById('input-linha').value = "";
+    document.getElementById('input-destino').value = "";
+    document.getElementById('input-preco').value = "";
+    document.getElementById('input-url').value = "";
+    document.getElementById('input-desc').value = "";
+    document.getElementById('btn-salvar').innerText = "Salvar na Planilha";
 }
 
 /* * ==========================================

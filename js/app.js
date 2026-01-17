@@ -1,0 +1,440 @@
+/* * ==========================================
+ * DATA STORE & RENDER (Paquetes)
+ * ==========================================
+ */
+// Datos iniciales si LocalStorage está vacío
+const defaultPackages = [
+    { id: 1, dest: "Buenos Aires", price: "$450 USD", img: "https://images.unsplash.com/photo-1589909202802-8f4aadce1849?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" },
+    { id: 2, dest: "Rio de Janeiro", price: "$520 USD", img: "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" },
+    { id: 3, dest: "Santiago", price: "$380 USD", img: "https://images.unsplash.com/photo-1590089415225-401eb6b9850d?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" }
+];
+
+function getPackages() {
+    const stored = localStorage.getItem('vh_packages');
+    return stored ? JSON.parse(stored) : defaultPackages;
+}
+
+function savePackages(pkgs) {
+    localStorage.setItem('vh_packages', JSON.stringify(pkgs));
+    renderPackages();
+    renderAdminPackages();
+}
+
+function renderPackages() {
+    const container = document.getElementById('packages-container');
+    const pkgs = getPackages();
+    // Requires translations and currentLang to be available. 
+    // Ensuring they are defined globally or passed.
+    const btnText = translations[currentLang].pkg_btn;
+
+    container.innerHTML = pkgs.map(pkg => `
+        <div class="package-card">
+            <div class="pkg-img"><img src="${pkg.img}" alt="${pkg.dest}"></div>
+            <div class="pkg-details">
+                <h3>${pkg.dest}</h3>
+                <p class="pkg-price">${pkg.price}</p>
+                <br>
+                <a href="https://wa.me/559591763272?text=Interesado%20en%20paquete%20a%20${pkg.dest}" target="_blank" class="btn btn-primary">${btnText}</a>
+            </div>
+        </div>
+    `).join('');
+}
+
+/* * ==========================================
+ * INSTAGRAM FEED RENDERER
+ * ==========================================
+ */
+const instagramPosts = [
+    { id: '1', url: 'https://www.instagram.com/reel/DND7gpNxtaq/?utm_source=ig_embed&amp;utm_campaign=loading' },
+    { id: '2', url: 'https://www.instagram.com/reel/DTdqCtGiWOG/?utm_source=ig_embed&amp;utm_campaign=loading' },
+    { id: '3', url: 'https://www.instagram.com/reel/DTQq9PPlJwT/?utm_source=ig_embed&amp;utm_campaign=loading' },
+    { id: '4', url: 'https://www.instagram.com/reel/DS7i-SnkZlU/?utm_source=ig_embed&amp;utm_campaign=loading' }
+];
+
+function renderInstagramFeed() {
+    const container = document.getElementById('instaGrid');
+    if (!container) return;
+
+    // SVG path constant to clear up the code
+    const svgPath = 'M556.869,30.41 C554.814,30.41 553.148,32.076 553.148,34.131 C553.148,36.186 554.814,37.852 556.869,37.852 C558.924,37.852 560.59,36.186 560.59,34.131 C560.59,32.076 558.924,30.41 556.869,30.41 M541,60.657 C535.114,60.657 530.342,55.887 530.342,50 C530.342,44.114 535.114,39.342 541,39.342 C546.887,39.342 551.658,44.114 551.658,50 C551.658,55.887 546.887,60.657 541,60.657 M541,33.886 C532.1,33.886 524.886,41.1 524.886,50 C524.886,58.899 532.1,66.113 541,66.113 C549.9,66.113 557.115,58.899 557.115,50 C557.115,41.1 549.9,33.886 541,33.886 M565.378,62.101 C565.244,65.022 564.756,66.606 564.346,67.663 C563.803,69.06 563.154,70.057 562.106,71.106 C561.058,72.155 560.06,72.803 558.662,73.347 C557.607,73.757 556.021,74.244 553.102,74.378 C549.944,74.521 548.997,74.552 541,74.552 C533.003,74.552 532.056,74.521 528.898,74.378 C525.979,74.244 524.393,73.757 523.338,73.347 C521.94,72.803 520.942,72.155 519.894,71.106 C518.846,70.057 518.197,69.06 517.654,67.663 C517.244,66.606 516.755,65.022 516.623,62.101 C516.479,58.943 516.448,57.996 516.448,50 C516.448,42.003 516.479,41.056 516.623,37.899 C516.755,34.978 517.244,33.391 517.654,32.338 C518.197,30.938 518.846,29.942 519.894,28.894 C520.942,27.846 521.94,27.196 523.338,26.654 C524.393,26.244 525.979,25.756 528.898,25.623 C532.057,25.479 533.004,25.448 541,25.448 C548.997,25.448 549.943,25.479 553.102,25.623 C556.021,25.756 557.607,26.244 558.662,26.654 C560.06,27.196 561.058,27.846 562.106,28.894 C563.154,29.942 563.803,30.938 564.346,32.338 C564.756,33.391 565.244,34.978 565.378,37.899 C565.522,41.056 565.552,42.003 565.552,50 C565.552,57.996 565.522,58.943 565.378,62.101 M570.82,37.631 C570.674,34.438 570.167,32.258 569.425,30.349 C568.659,28.377 567.633,26.702 565.965,25.035 C564.297,23.368 562.623,22.342 560.652,21.575 C558.743,20.834 556.562,20.326 553.369,20.18 C550.169,20.033 549.148,20 541,20 C532.853,20 531.831,20.033 528.631,20.18 C525.438,20.326 523.257,20.834 521.349,21.575 C519.376,22.342 517.703,23.368 516.035,25.035 C514.368,26.702 513.342,28.377 512.574,30.349 C511.834,32.258 511.326,34.438 511.181,37.631 C511.035,40.831 511,41.851 511,50 C511,58.147 511.035,59.17 511.181,62.369 C511.326,65.562 511.834,67.743 512.574,69.651 C513.342,71.625 514.368,73.296 516.035,74.965 C517.703,76.634 519.376,77.658 521.349,78.425 C523.257,79.167 525.438,79.673 528.631,79.82 C531.831,79.965 532.853,80.001 541,80.001 C549.148,80.001 550.169,79.965 553.369,79.82 C556.562,79.673 558.743,79.167 560.652,78.425 C562.623,77.658 564.297,76.634 565.965,74.965 C567.633,73.296 568.659,71.625 569.425,69.651 C570.167,67.743 570.674,65.562 570.82,62.369 C570.966,59.17 571,58.147 571,50 C571,41.851 570.966,40.831 570.82,37.631';
+
+    // Helper to generate the post HTML
+    // Note: The structure mimics the Instagram Embed fallback code
+    const createPostHTML = (post) => `
+    <div class="insta-post">
+        <blockquote class="instagram-media" data-instgrm-permalink="${post.url}" data-instgrm-version="14" style="background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:540px; min-width:326px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);">
+            <div style="padding:16px;">
+                <a href="${post.url}" style="background:#FFFFFF; line-height:0; padding:0 0; text-align:center; text-decoration:none; width:100%;" target="_blank">
+                    <div style="display: flex; flex-direction: row; align-items: center;">
+                        <div style="background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 40px; margin-right: 14px; width: 40px;"></div>
+                        <div style="display: flex; flex-direction: column; flex-grow: 1; justify-content: center;">
+                            <div style="background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; margin-bottom: 6px; width: 100px;"></div>
+                            <div style="background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; width: 60px;"></div>
+                        </div>
+                    </div>
+                    <div style="padding: 19% 0;"></div>
+                    <div style="display:block; height:50px; margin:0 auto 12px; width:50px;">
+                        <svg width="50px" height="50px" viewBox="0 0 60 60" version="1.1" xmlns="https://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <g transform="translate(-511.000000, -20.000000)" fill="#000000">
+                                    <path d="${svgPath}"></path>
+                                </g>
+                            </g>
+                        </svg>
+                    </div>
+                    <div style="padding-top: 8px;">
+                        <div style="color:#3897f0; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:550; line-height:18px;">Ver esta publicación en Instagram</div>
+                    </div>
+                    <div style="padding: 12.5% 0;"></div>
+                    <div style="display: flex; flex-direction: row; margin-bottom: 14px; align-items: center;">
+                        <div>
+                            <div style="background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(0px) translateY(7px);"></div>
+                            <div style="background-color: #F4F4F4; height: 12.5px; transform: rotate(-45deg) translateX(3px) translateY(1px); width: 12.5px; flex-grow: 0; margin-right: 14px; margin-left: 2px;"></div>
+                            <div style="background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(9px) translateY(-18px);"></div>
+                        </div>
+                        <div style="margin-left: 8px;">
+                            <div style="background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 20px; width: 20px;"></div>
+                            <div style="width: 0; height: 0; border-top: 2px solid transparent; border-left: 6px solid #f4f4f4; border-bottom: 2px solid transparent; transform: translateX(16px) translateY(-4px) rotate(30deg)"></div>
+                        </div>
+                        <div style="margin-left: auto;">
+                            <div style="width: 0px; border-top: 8px solid #F4F4F4; border-right: 8px solid transparent; transform: translateY(16px);"></div>
+                            <div style="background-color: #F4F4F4; flex-grow: 0; height: 12px; width: 16px; transform: translateY(-4px);"></div>
+                            <div style="width: 0; height: 0; border-top: 8px solid #F4F4F4; border-left: 8px solid transparent; transform: translateY(-4px) translateX(8px);"></div>
+                        </div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; flex-grow: 1; justify-content: center; margin-bottom: 24px;">
+                        <div style="background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; margin-bottom: 6px; width: 224px;"></div>
+                        <div style="background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; width: 144px;"></div>
+                    </div>
+                </a>
+                <p style="color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;">
+                    <a href="${post.url}" style="color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none;" target="_blank">Una publicación compartida por Hacemos tu viaje una realidad ✨✈️ (@vhtours_br)</a>
+                </p>
+            </div>
+        </blockquote>
+    </div>
+    `;
+
+    container.innerHTML = instagramPosts.map(createPostHTML).join('');
+
+    // Inject the Instagram Embed Script dynamically after rendering
+    // This ensures it processes the newly added blockquotes
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = "//www.instagram.com/embed.js";
+    document.body.appendChild(script);
+}
+
+function scrollInsta(direction) {
+    const grid = document.getElementById('instaGrid');
+    const scrollAmount = 350; // Card width + gap
+    grid.scrollBy({
+        left: direction * scrollAmount,
+        behavior: 'smooth'
+    });
+}
+
+/* * ==========================================
+ * GESTIÓN DE IDIOMAS
+ * ==========================================
+ */
+const translations = {
+    es: {
+        nav_home: "Inicio", nav_mission: "Misión y Visión", nav_packages: "Paquetes", nav_miles: "Millas", nav_payment: "Pagos", nav_instagram: "Instagram", nav_contact: "Contacto",
+        hero_title: "Viaja más, pagando menos, con VH TOURS", hero_subtitle: "Expertos en conectar destinos con confianza y los mejores precios del mercado.",
+        btn_buy_ticket: "Comprar Pasaje", btn_advisor: "Hablar con Asesor",
+        lbl_origin: "Origen", lbl_dest: "Destino", lbl_date_out: "Ida", lbl_date_ret: "Vuelta", lbl_passengers: "Pasajeros", btn_search: "Buscar Pasajes",
+        ph_city: "Ciudad",
+        mission_title: "Nuestra Misión", mission_desc: "Conectar sueños con destinos, brindando experiencias de viaje accesibles y seguras para todos nuestros clientes en Sudamérica.",
+        vision_title: "Nuestra Visión", vision_desc: "Ser la agencia de turismo líder en la región, reconocida por nuestra innovación, transparencia y excelencia en el servicio al cliente.",
+        id_title: "Viaja solo con tu Cédula", id_desc: "Disfruta de la libertad de viajar por el MERCOSUR sin pasaporte. Tu documento de identidad es tu llave para nuevas aventuras.", btn_more_info: "Más Información",
+        miles_title: "¿Tienes Millas Acumuladas?", miles_desc: "Compramos, vendemos y gestionamos tus millas para que vueles más barato.", btn_miles_specialist: "Especialista en Millas",
+        pkg_title: "Paquetes Destacados", pkg_subtitle: "Las mejores ofertas seleccionadas para ti.",
+        pay_methods: "Medios de Pago Flexibles", pay_secure: "Pagos 100% Seguros y Verificados",
+        insta_title: "Síguenos en Instagram", insta_desc: "Mantente al día con nuestras últimas ofertas y destinos @vhtours_br", btn_insta_more: "Ver más en Instagram",
+        footer_about: "Tu agencia de confianza para viajes internacionales y gestión de millas.", footer_contact: "Contacto", footer_social: "Síguenos",
+        chat_welcome: "¡Hola! Soy VH Tours Assistant. ¿En qué puedo ayudarte hoy?",
+        pkg_btn: "Ver Oferta",
+        map_title: "Nuestra Ubicación",
+        whatsapp_cta: "¡No te pierdas nada! Únete al canal y recibe promociones en tiempo real.",
+        footer_copy: "&copy; 2026 Nombre de la Empresa Cliente. Todos los derechos reservados.",
+        footer_dev: "Desarrollado por",
+        chatbot: {
+            greeting_options: "Opciones disponibles: <br>- Pasajes/Precio<br>- Dirección/Ubicación<br>- CNPJ<br>- Instagram<br>- WhatsApp<br>- Hablar con Agente<br>- Sobre Nosotros",
+            price: "Los precios varían según la fecha y destino. ¿Podrías indicarme a dónde quieres viajar?",
+            greeting: "¡Hola! ¿Buscas pasajes, paquetes turísticos o información de la empresa? (Escribe 'Menu' para ver opciones)",
+            destinations: "¡Excelente destino! Tenemos ofertas especiales. ¿Te gustaría hablar con un asesor humano?",
+            address: "Estamos ubicados en: Av. Brigadeiro Eduardo Gomes, 1082, Sala 01 - Estados, Boa Vista - RR, 69.305-455",
+            cnpj: "Nuestra empresa opera con el CNPJ: 33.662.094/0001-13 (Vh Tours Empreendimentos Ltda)",
+            insta: "Síguenos en Instagram: <a href='https://www.instagram.com/vhtours_br/' target='_blank' style='color:var(--secondary-color)'>@vhtours_br</a>",
+            whatsapp: "Nuestro WhatsApp principal es: <a href='https://wa.me/559591763272' target='_blank' style='color:var(--secondary-color)'>+55 95 9176-3272</a>",
+            agent: "Puedes contactar a nuestros asesores aquí: <a href='https://linkfly.to/vhtours' target='_blank' style='color:var(--secondary-color)'>Contactar Agentes</a>",
+            about: "Somos VH Tours, especialistas en conectar destinos en Sudamérica con los mejores precios y seguridad. Ofrecemos pasajes aéreos, paquetes turísticos y gestión de millas.",
+            desc_tourism: "El turismo es más que viajar, es vivir experiencias. En VH Tours te ayudamos a descubrir Brasil, Argentina, Chile y más, solo con tu cédula.",
+            default: "Entendo. Para brindarte mejor atención, te transferiré con un agente humano vía WhatsApp, o escribe 'Menu' para ver opciones."
+        }
+    },
+    pt: {
+        nav_home: "Início", nav_mission: "Missão e Visão", nav_packages: "Pacotes", nav_miles: "Milhas", nav_payment: "Pagamentos", nav_instagram: "Instagram", nav_contact: "Contato",
+        hero_title: "Viaje mais, pagando menos, com VH TOURS", hero_subtitle: "Especialistas em conectar destinos com confiança e os melhores preços do mercado.",
+        btn_buy_ticket: "Comprar Passagem", btn_advisor: "Falar com Consultor",
+        lbl_origin: "Origem", lbl_dest: "Destino", lbl_date_out: "Ida", lbl_date_ret: "Volta", lbl_passengers: "Passageiros", btn_search: "Buscar Passagens",
+        ph_city: "Cidade",
+        mission_title: "Nossa Missão", mission_desc: "Conectar sonhos com destinos, oferecendo experiências de viagem acessíveis e seguras para todos os nossos clientes na América do Sul.",
+        vision_title: "Nossa Visão", vision_desc: "Ser a agência de turismo líder na região, reconhecida por nossa inovação, transparência e excelência no atendimento ao cliente.",
+        id_title: "Viaje apenas com seu RG", id_desc: "Desfrute da liberdade de viajar pelo MERCOSUL sem passaporte. Seu documento de identidade é sua chave para novas aventuras.", btn_more_info: "Mais Informações",
+        miles_title: "Tem Milhas Acumuladas?", miles_desc: "Compramos, vendemos e gerenciamos suas milhas para você voar mais barato.", btn_miles_specialist: "Especialista em Milhas",
+        pkg_title: "Pacotes em Destaque", pkg_subtitle: "As melhores ofertas selecionadas para você.",
+        pay_methods: "Meios de Pagamento Flexíveis", pay_secure: "Pagamentos 100% Seguros e Verificados",
+        insta_title: "Siga-nos no Instagram", insta_desc: "Fique por dentro das nossas últimas ofertas e destinos @vhtours_br", btn_insta_more: "Ver mais no Instagram",
+        footer_about: "Sua agência de confiança para viagens internacionais e gestão de milhas.", footer_contact: "Contato", footer_social: "Siga-nos",
+        chat_welcome: "Olá! Sou VH Tours Assistant. Como posso ajudar hoje?",
+        pkg_btn: "Ver Oferta",
+        map_title: "Nossa Localização",
+        whatsapp_cta: "Não perca nada! Entre no canal e receba promoções em tempo real.",
+        footer_copy: "&copy; 2026 Nome da Empresa Cliente. All rights reserved.",
+        footer_dev: "Desenvolvido por",
+        chatbot: {
+            greeting_options: "Opções disponíveis: <br>- Passagens/Preço<br>- Endereço/Localização<br>- CNPJ<br>- Instagram<br>- WhatsApp<br>- Falar com Agente<br>- Sobre a Empresa",
+            price: "Os preços variam conforme a data e destino. Poderia me informar para onde deseja viajar?",
+            greeting: "Olá! Busca passagens, pacotes turísticos ou informações da empresa? (Digite 'Menu' para ver opções)",
+            destinations: "Excelente destino! Temos ofertas especiais. Gostaria de falar com um consultor humano?",
+            address: "Estamos localizados em: Av. Brigadeiro Eduardo Gomes, 1082, Sala 01 - Estados, Boa Vista - RR, 69.305-455",
+            cnpj: "Nossa empresa opera com o CNPJ: 33.662.094/0001-13 (Vh Tours Empreendimentos Ltda)",
+            insta: "Siga-nos no Instagram: <a href='https://www.instagram.com/vhtours_br/' target='_blank' style='color:var(--secondary-color)'>@vhtours_br</a>",
+            whatsapp: "Nosso WhatsApp principal é: <a href='https://wa.me/559591763272' target='_blank' style='color:var(--secondary-color)'>+55 95 9176-3272</a>",
+            agent: "Você pode contatar nossos consultores aqui: <a href='https://linkfly.to/vhtours' target='_blank' style='color:var(--secondary-color)'>Contatar Agentes</a>",
+            about: "Somos a VH Tours, especialistas em conectar destinos na América do Sul com os melhores preços e segurança. Oferecemos passagens aéreas, pacotes turísticos e gestão de milhas.",
+            desc_tourism: "O turismo é mais que viajar, é viver experiências. Na VH Tours ajudamos você a descobrir Brasil, Argentina, Chile e mais, apenas com seu RG.",
+            default: "Entendo. Para melhor atendimento, vou te transferir para um agente humano via WhatsApp, ou digite 'Menu' para ver opções."
+        }
+    },
+    en: {
+        nav_home: "Home", nav_mission: "Mission & Vision", nav_packages: "Packages", nav_miles: "Miles", nav_payment: "Payments", nav_instagram: "Instagram", nav_contact: "Contact",
+        hero_title: "Travel more, pay less, with VH TOURS", hero_subtitle: "Experts connecting destinations with trust and the best market prices.",
+        btn_buy_ticket: "Buy Ticket", btn_advisor: "Talk to Advisor",
+        lbl_origin: "Origin", lbl_dest: "Destination", lbl_date_out: "Depart", lbl_date_ret: "Return", lbl_passengers: "Passengers", btn_search: "Search Flights",
+        ph_city: "City",
+        mission_title: "Our Mission", mission_desc: "Connecting dreams with destinations, providing accessible and safe travel experiences for all our customers in South America.",
+        vision_title: "Our Vision", vision_desc: "To be the leading tourism agency in the region, recognized for our innovation, transparency, and excellence in customer service.",
+        id_title: "Travel with ID Only", id_desc: "Enjoy the freedom of traveling through MERCOSUR without a passport. Your ID card is your key to new adventures.", btn_more_info: "More Info",
+        miles_title: "Got Accumulated Miles?", miles_desc: "We buy, sell, and manage your miles so you fly cheaper.", btn_miles_specialist: "Miles Specialist",
+        pkg_title: "Featured Packages", pkg_subtitle: "The best offers selected for you.",
+        pay_methods: "Flexible Payment Methods", pay_secure: "100% Secure & Verified Payments",
+        insta_title: "Follow us on Instagram", insta_desc: "Stay updated with our latest offers and destinations @vhtours_br", btn_insta_more: "See more on Instagram",
+        footer_about: "Your trusted agency for international travel and miles management.", footer_contact: "Contact", footer_social: "Follow Us",
+        chat_welcome: "Hello! I am VH Tours Assistant. How can I help you today?",
+        pkg_btn: "View Offer",
+        map_title: "Our Location",
+        whatsapp_cta: "Don't miss out! Join the channel and receive real-time promotions.",
+        footer_copy: "&copy; 2026 Client Company Name. All rights reserved.",
+        footer_dev: "Developed by",
+        chatbot: {
+            greeting_options: "Available options: <br>- Flights/Price<br>- Address/Location<br>- CNPJ<br>- Instagram<br>- WhatsApp<br>- Talk to Agent<br>- About Us",
+            price: "Prices vary by date and destination. Where would you like to travel?",
+            greeting: "Hello! Are you looking for tickets, packages, or company info? (Type 'Menu' for options)",
+            destinations: "Great destination! We have special offers. Would you like to speak with a human advisor?",
+            address: "We are located at: Av. Brigadeiro Eduardo Gomes, 1082, Sala 01 - Estados, Boa Vista - RR, 69.305-455",
+            cnpj: "Our company operates under CNPJ: 33.662.094/0001-13 (Vh Tours Empreendimentos Ltda)",
+            insta: "Follow us on Instagram: <a href='https://www.instagram.com/vhtours_br/' target='_blank' style='color:var(--secondary-color)'>@vhtours_br</a>",
+            whatsapp: "Our main WhatsApp is: <a href='https://wa.me/559591763272' target='_blank' style='color:var(--secondary-color)'>+55 95 9176-3272</a>",
+            agent: "You can contact our agents here: <a href='https://linkfly.to/vhtours' target='_blank' style='color:var(--secondary-color)'>Contact Agents</a>",
+            about: "We are VH Tours, specialists in connecting destinations in South America with the best prices and safety. We offer air tickets, tour packages, and miles management.",
+            desc_tourism: "Tourism is more than traveling, it is living experiences. At VH Tours we help you discover Brazil, Argentina, Chile, and more, with just your ID.",
+            default: "I understand. For better assistance, I will transfer you to a human agent via WhatsApp, or type 'Menu' to see options."
+        }
+    }
+};
+
+let currentLang = 'es';
+
+function changeLanguage(lang) {
+    currentLang = lang;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang][key]) el.innerText = translations[lang][key];
+    });
+    document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+        const key = el.getAttribute('data-i18n-ph');
+        if (translations[lang][key]) el.placeholder = translations[lang][key];
+    });
+
+    // Update Map Language
+    const mapIframe = document.getElementById('google-map-iframe');
+    let mapLang = 'es';
+    if (lang === 'pt') mapLang = 'pt-BR';
+    if (lang === 'en') mapLang = 'en';
+
+    let currentSrc = mapIframe.src;
+    // cleaning previous param if exists
+    currentSrc = currentSrc.replace(/&language=[a-zA-Z-]+/, '');
+    mapIframe.src = currentSrc + `&language=${mapLang}`;
+
+    renderPackages(); // Re-render to update package buttons
+}
+
+/* * ==========================================
+ * ADMIN & LOGIN LOGIC
+ * ==========================================
+ */
+function openLogin() { document.getElementById('loginModal').style.display = 'flex'; }
+function closeLogin() { document.getElementById('loginModal').style.display = 'none'; }
+
+function attemptLogin() {
+    const u = document.getElementById('adminUser').value;
+    const p = document.getElementById('adminPass').value;
+
+    // USUARIO: admin | CONTRASEÑA: 123456
+    if (u === 'admin' && p === '123456') {
+        closeLogin();
+        document.getElementById('public-site').style.display = 'none';
+        document.getElementById('admin-panel').style.display = 'block';
+        renderAdminPackages();
+    } else {
+        alert('Credenciales Incorrectas');
+    }
+}
+
+function logout() {
+    document.getElementById('admin-panel').style.display = 'none';
+    document.getElementById('public-site').style.display = 'block';
+    document.getElementById('adminUser').value = '';
+    document.getElementById('adminPass').value = '';
+}
+
+function backToSite() {
+    document.getElementById('admin-panel').style.display = 'none';
+    document.getElementById('public-site').style.display = 'block';
+}
+
+/* CRUD PAQUETES */
+function renderAdminPackages() {
+    const list = document.getElementById('admin-pkg-list');
+    const pkgs = getPackages();
+    list.innerHTML = pkgs.map(pkg => `
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #ddd; padding:10px 0;">
+            <div>
+                <strong>${pkg.dest}</strong> - ${pkg.price}
+            </div>
+            <button class="btn btn-accent" style="padding:5px 10px; font-size:0.7rem;" onclick="deletePackage(${pkg.id})">Eliminar</button>
+        </div>
+    `).join('');
+}
+
+function addPackage() {
+    const dest = document.getElementById('newPkgDest').value;
+    const price = document.getElementById('newPkgPrice').value;
+    const img = document.getElementById('newPkgImg').value || "https://via.placeholder.com/300"; // Fallback image
+
+    if (dest && price) {
+        const pkgs = getPackages();
+        pkgs.push({ id: Date.now(), dest, price, img });
+        savePackages(pkgs);
+        // Clear fields
+        document.getElementById('newPkgDest').value = '';
+        document.getElementById('newPkgPrice').value = '';
+        document.getElementById('newPkgImg').value = '';
+    } else {
+        alert('Complete destino y precio');
+    }
+}
+
+function deletePackage(id) {
+    if (confirm('¿Eliminar paquete?')) {
+        const pkgs = getPackages().filter(p => p.id !== id);
+        savePackages(pkgs);
+    }
+}
+
+/* * ==========================================
+ * CHATBOT LOGIC
+ * ==========================================
+ */
+function toggleChat() {
+    const chat = document.getElementById('chatWindow');
+    chat.style.display = chat.style.display === 'flex' ? 'none' : 'flex';
+}
+
+function handleChat(e) {
+    if (e.key === 'Enter') sendMessage();
+}
+
+function sendMessage() {
+    const input = document.getElementById('chatInput');
+    const msg = input.value.trim();
+    const body = document.getElementById('chatBody');
+
+    if (msg) {
+        // User Msg
+        body.innerHTML += `<div class="chat-msg user-msg">${msg}</div>`;
+        input.value = '';
+        body.scrollTop = body.scrollHeight;
+
+        // IA Simulatada
+        setTimeout(() => {
+            let reply = "";
+            const m = msg.toLowerCase();
+            const replies = translations[currentLang].chatbot;
+
+            // Improve matching logic with inclusive lower case check
+            if (m === 'menu' || m === 'ayuda' || m === 'ajuda' || m === 'help') {
+                reply = replies.greeting_options;
+            } else if (m.match(/precio|cuanto|costo|preço|valor|price|cost/i)) {
+                reply = replies.price;
+            } else if (m.match(/hola|buenas|ola|oi|hello|hi/i)) {
+                reply = replies.greeting;
+            } else if (m.match(/madrid|miami|buenos aires|lisboa|orlando/i)) {
+                reply = replies.destinations;
+            } else if (m.match(/direccion|dirección|ubicacion|ubicación|endereço|donde|onde|fica|address|where/i)) {
+                reply = replies.address;
+            } else if (m.match(/cnpj|razon|razão|social/i)) {
+                reply = replies.cnpj;
+            } else if (m.match(/instagram|insta|redes/i)) {
+                reply = replies.insta;
+            } else if (m.match(/whatsapp|zap|wpp|fone|telefono|teléfono|phone|contact|contato/i)) {
+                reply = replies.whatsapp;
+            } else if (m.match(/asesor|agente|falar|humano|persona|agent|human/i)) {
+                reply = replies.agent;
+            } else if (m.match(/sobre|empresa|quienes|quem|somos|about|company|vh tours/i)) {
+                reply = replies.about;
+            } else if (m.match(/turismo|viajar|experiencia|tourism/i)) {
+                reply = replies.desc_tourism;
+            } else {
+                reply = replies.default;
+            }
+
+            body.innerHTML += `<div class="chat-msg bot-msg">${reply}</div>`;
+            body.scrollTop = body.scrollHeight;
+        }, 1000);
+    }
+}
+
+/* * ==========================================
+ * MISC
+ * ==========================================
+ */
+function simulateSearch() {
+    // SIMULAÇÃO: Redireciona para WhatsApp com os dados
+    const org = document.querySelector('[data-i18n-ph="ph_city"]').value || "Origen";
+    const dst = document.querySelectorAll('[data-i18n-ph="ph_city"]')[1].value || "Destino";
+    window.open(`https://wa.me/559591763272?text=Hola, quiero cotizar vuelos de ${org} a ${dst}`, '_blank');
+}
+
+function toggleMenu() {
+    const nav = document.getElementById('nav-links');
+    nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+    nav.style.flexDirection = 'column';
+    nav.style.position = 'absolute';
+    nav.style.top = '60px';
+    nav.style.left = '0';
+    nav.style.width = '100%';
+    nav.style.background = 'white';
+    nav.style.padding = '20px';
+    nav.style.boxShadow = '0 5px 5px rgba(0,0,0,0.1)';
+}
+
+// Init
+window.onload = function () {
+    renderPackages();
+    renderInstagramFeed(); // New render function
+}

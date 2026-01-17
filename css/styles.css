@@ -731,13 +731,38 @@ footer {
         font-size: 2.2rem;
     }
 
-    .navbar .nav-menu {
-        display: none;
-    }
-
-    /* Simplificado para demo */
     .hamburger {
         display: block;
+    }
+
+    .nav-menu {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 280px;
+        height: 100vh;
+        background: var(--white);
+        flex-direction: column;
+        padding: 80px 40px;
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+        transition: right 0.4s ease;
+        z-index: 2000;
+        display: flex !important;
+        gap: 30px;
+    }
+
+    .nav-menu.active {
+        right: 0;
+    }
+
+    .mobile-close {
+        display: block !important;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        font-size: 2rem;
+        cursor: pointer;
+        color: var(--primary-color);
     }
 
     .miles-banner {
@@ -759,4 +784,8 @@ footer {
         border: none;
         border-bottom: 1px solid #eee;
     }
+}
+
+.mobile-close {
+    display: none;
 }

@@ -494,15 +494,7 @@ function simulateSearch() {
 
 function toggleMenu() {
     const nav = document.getElementById('nav-links');
-    nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
-    nav.style.flexDirection = 'column';
-    nav.style.position = 'absolute';
-    nav.style.top = '60px';
-    nav.style.left = '0';
-    nav.style.width = '100%';
-    nav.style.background = 'white';
-    nav.style.padding = '20px';
-    nav.style.boxShadow = '0 5px 5px rgba(0,0,0,0.1)';
+    nav.classList.toggle('active');
 }
 
 // Init

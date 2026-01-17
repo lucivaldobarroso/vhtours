@@ -48,13 +48,16 @@
                     <i class="fas fa-bars"></i>
                 </div>
                 <ul class="nav-menu" id="nav-links">
-                    <li><a href="#home" class="nav-link" data-i18n="nav_home">Inicio</a></li>
-                    <li><a href="#mission-vision" class="nav-link" data-i18n="nav_mission">Misión y Visión</a></li>
-                    <li><a href="#packages" class="nav-link" data-i18n="nav_packages">Paquetes</a></li>
-                    <li><a href="#miles" class="nav-link" data-i18n="nav_miles">Millas</a></li>
-                    <li><a href="#payment" data-i18n="nav_payment">Pagos</a></li>
-                    <li><a href="#instagram" data-i18n="nav_instagram">Instagram</a></li>
-                    <li><a href="#contact" data-i18n="nav_contact">Contacto</a></li>
+                    <li class="mobile-close"><a href="#" onclick="toggleMenu()">✖</a></li>
+                    <li><a href="#home" class="nav-link" data-i18n="nav_home" onclick="toggleMenu()">Inicio</a></li>
+                    <li><a href="#mission-vision" class="nav-link" data-i18n="nav_mission" onclick="toggleMenu()">Misión
+                            y Visión</a></li>
+                    <li><a href="#packages" class="nav-link" data-i18n="nav_packages"
+                            onclick="toggleMenu()">Paquetes</a></li>
+                    <li><a href="#miles" class="nav-link" data-i18n="nav_miles" onclick="toggleMenu()">Millas</a></li>
+                    <li><a href="#payment" data-i18n="nav_payment" onclick="toggleMenu()">Pagos</a></li>
+                    <li><a href="#instagram" data-i18n="nav_instagram" onclick="toggleMenu()">Instagram</a></li>
+                    <li><a href="#contact" data-i18n="nav_contact" onclick="toggleMenu()">Contacto</a></li>
                     <li><select class="lang-select" onchange="changeLanguage(this.value)">
                             <option value="es">🇪🇸 ES</option>
                             <option value="pt">🇧🇷 PT</option>
@@ -339,7 +342,7 @@
                 </div>
 
                 <div style="display: flex; gap: 10px; margin-top: 15px;">
-                    <button class="btn btn-primary" id="btn-salvar" onclick="salvarDados()">Salvar na Planilha</button>
+                    <button class="btn btn-primary" id="btn-salvar" onclick="salvarDados()">Salvar</button>
                     <button class="btn btn-accent" onclick="limparFormulario()">Limpar</button>
                 </div>
             </div>

@@ -143,6 +143,10 @@ const translations = {
         vision_title: "Nuestra Visión", vision_desc: "Ser la agencia de turismo líder en la región, reconocida por nuestra innovación, transparencia y excelencia en el servicio al cliente.",
         id_title: "Viaja solo con tu Cédula", id_desc: "Disfruta de la libertad de viajar por el MERCOSUR sin pasaporte. Tu documento de identidad es tu llave para nuevas aventuras.", btn_more_info: "Más Información",
         miles_title: "¿Tienes Millas Acumuladas?", miles_desc: "Compramos, vendemos y gestionamos tus millas para que vueles más barato.", btn_miles_specialist: "Especialista en Millas",
+        benefit_1_title: "Sin Pasaporte", benefit_1_desc: "Viaja solo con tu documento de identidad vigente.",
+        benefit_2_title: "MERCOSUR", benefit_2_desc: "Acceso a Brasil, Argentina, Uruguay, Paraguay, Chile y Colombia.",
+        benefit_3_title: "Menos Burocracia", benefit_3_desc: "Trámites migratorios más ágiles y sencillos.",
+        benefit_4_title: "Seguridad", benefit_4_desc: "Asesoría completa para que viajes tranquilo.",
         pkg_title: "Paquetes Destacados", pkg_subtitle: "Las mejores ofertas seleccionadas para ti.",
         pay_methods: "Medios de Pago Flexibles", pay_secure: "Pagos 100% Seguros y Verificados",
         insta_title: "Síguenos en Instagram", insta_desc: "Mantente al día con nuestras últimas ofertas y destinos @vhtours_br", btn_insta_more: "Ver más en Instagram",
@@ -178,6 +182,10 @@ const translations = {
         vision_title: "Nossa Visão", vision_desc: "Ser a agência de turismo líder na região, reconhecida por nossa inovação, transparência e excelência no atendimento ao cliente.",
         id_title: "Viaje apenas com seu RG", id_desc: "Desfrute da liberdade de viajar pelo MERCOSUL sem passaporte. Seu documento de identidade é sua chave para novas aventuras.", btn_more_info: "Mais Informações",
         miles_title: "Tem Milhas Acumuladas?", miles_desc: "Compramos, vendemos e gerenciamos suas milhas para você voar mais barato.", btn_miles_specialist: "Especialista em Milhas",
+        benefit_1_title: "Sem Passaporte", benefit_1_desc: "Viaje apenas com seu documento de identidade vigente.",
+        benefit_2_title: "MERCOSUL", benefit_2_desc: "Acesso ao Brasil, Argentina, Uruguai, Paraguai, Chile e Colômbia.",
+        benefit_3_title: "Menos Burocracia", benefit_3_desc: "Trâmites migratórios mais ágeis e simples.",
+        benefit_4_title: "Segurança", benefit_4_desc: "Assessoria completa para você viajar tranquilo.",
         pkg_title: "Pacotes em Destaque", pkg_subtitle: "As melhores ofertas selecionadas para você.",
         pay_methods: "Meios de Pagamento Flexíveis", pay_secure: "Pagamentos 100% Seguros e Verificados",
         insta_title: "Siga-nos no Instagram", insta_desc: "Fique por dentro das nossas últimas ofertas e destinos @vhtours_br", btn_insta_more: "Ver mais no Instagram",
@@ -213,6 +221,10 @@ const translations = {
         vision_title: "Our Vision", vision_desc: "To be the leading tourism agency in the region, recognized for our innovation, transparency, and excellence in customer service.",
         id_title: "Travel with ID Only", id_desc: "Enjoy the freedom of traveling through MERCOSUR without a passport. Your ID card is your key to new adventures.", btn_more_info: "More Info",
         miles_title: "Got Accumulated Miles?", miles_desc: "We buy, sell, and manage your miles so you fly cheaper.", btn_miles_specialist: "Miles Specialist",
+        benefit_1_title: "No Passport", benefit_1_desc: "Travel only with your valid ID document.",
+        benefit_2_title: "MERCOSUR", benefit_2_desc: "Access to Brazil, Argentina, Uruguay, Paraguay, Chile, and Colombia.",
+        benefit_3_title: "Less Bureaucracy", benefit_3_desc: "Faster and simpler migration procedures.",
+        benefit_4_title: "Security", benefit_4_desc: "Full advice for a peaceful trip.",
         pkg_title: "Featured Packages", pkg_subtitle: "The best offers selected for you.",
         pay_methods: "Flexible Payment Methods", pay_secure: "100% Secure & Verified Payments",
         insta_title: "Follow us on Instagram", insta_desc: "Stay updated with our latest offers and destinations @vhtours_br", btn_insta_more: "See more on Instagram",
@@ -347,7 +359,7 @@ async function salvarDados() {
 
     const corpo = {
         action: acao,
-        linha: parseInt(linha),
+        linha: linha ? parseInt(linha) : null,
         destino: document.getElementById('input-destino').value,
         preco: document.getElementById('input-preco').value,
         urlImagem: document.getElementById('input-url').value,
@@ -406,7 +418,7 @@ function prepararEdicao(linha, nome, preco, url, desc) {
     document.getElementById('input-preco').value = preco;
     document.getElementById('input-url').value = url;
     document.getElementById('input-desc').value = desc === 'undefined' ? '' : desc;
-    document.getElementById('btn-salvar').innerText = "Atualizar Dados";
+    document.getElementById('btn-salvar').innerText = "Salvar";
 }
 
 function limparFormulario() {
@@ -415,7 +427,7 @@ function limparFormulario() {
     document.getElementById('input-preco').value = "";
     document.getElementById('input-url').value = "";
     document.getElementById('input-desc').value = "";
-    document.getElementById('btn-salvar').innerText = "Salvar na Planilha";
+    document.getElementById('btn-salvar').innerText = "Salvar";
 }
 
 /* * ==========================================
@@ -493,8 +505,10 @@ function simulateSearch() {
 }
 
 function toggleMenu() {
-    const nav = document.getElementById('nav-links');
-    nav.classList.toggle('active');
+    if (window.innerWidth <= 768) {
+        const nav = document.getElementById('nav-links');
+        nav.classList.toggle('active');
+    }
 }
 
 // Init

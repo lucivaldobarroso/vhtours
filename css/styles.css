@@ -172,6 +172,10 @@ header {
     align-items: center;
 }
 
+.mobile-close {
+    display: none;
+}
+
 .nav-link {
     font-weight: 500;
     color: var(--text-dark);
@@ -784,8 +788,4 @@ footer {
         border: none;
         border-bottom: 1px solid #eee;
     }
-}
-
-.mobile-close {
-    display: none;
 }

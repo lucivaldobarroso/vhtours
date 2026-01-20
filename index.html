@@ -21,12 +21,16 @@
         <div class="login-box">
             <h2 style="color: var(--primary-color); margin-bottom: 20px;">Acceso Empleados</h2>
             <div class="form-group" style="margin-bottom: 15px;">
-                <input type="text" id="user" placeholder="Usuario">
+                <input type="text" id="user" placeholder="Usuario" onkeypress="handleLoginKey(event)">
             </div>
             <div class="form-group" style="margin-bottom: 20px;">
-                <input type="password" id="pass" placeholder="Contraseña">
+                <input type="password" id="pass" placeholder="Contraseña" onkeypress="handleLoginKey(event)">
             </div>
-            <button class="btn btn-primary" style="width: 100%;" onclick="logar()">Entrar</button>
+            <button class="btn btn-primary" id="btn-login" style="width: 100%;" onclick="logar()">Entrar</button>
+            <div id="login-loader" class="loader-spinner" style="margin-top: 15px;"></div>
+            <p id="login-status"
+                style="margin-top: 10px; font-size: 0.85rem; color: var(--primary-color); display: none;">
+                Autenticando...</p>
             <p style="margin-top: 15px; font-size: 0.8rem; cursor: pointer; color: #666;" onclick="closeLogin()">
                 Cancelar</p>
         </div>
@@ -41,7 +45,7 @@
             </div>
             <nav class="navbar container">
                 <div class="logo-container">
-                    <img src="img/vh-logo.jpg" alt="VH Tours Logo" class="logo-img">
+                    <img src="img/logo-vhtours.jpg" alt="VH Tours Logo" class="logo-img">
                     <a href="#" class="nav-brand">VH TOURS</a>
                 </div>
                 <div class="hamburger" onclick="toggleMenu()">
@@ -52,6 +56,8 @@
                     <li><a href="#home" class="nav-link" data-i18n="nav_home" onclick="toggleMenu()">Inicio</a></li>
                     <li><a href="#mission-vision" class="nav-link" data-i18n="nav_mission" onclick="toggleMenu()">Misión
                             y Visión</a></li>
+                    <li><a href="#search-section" class="nav-link" data-i18n="nav_search"
+                            onclick="toggleMenu()">Pesquisa sua Viagem</a></li>
                     <li><a href="#packages" class="nav-link" data-i18n="nav_packages"
                             onclick="toggleMenu()">Paquetes</a></li>
                     <li><a href="#miles" class="nav-link" data-i18n="nav_miles" onclick="toggleMenu()">Millas</a></li>
@@ -82,27 +88,29 @@
             </div>
         </section>
 
-        <!-- MISSION & VISION SECTION (Overlapping Hero) -->
-        <div class="container mission-vision-section" id="mission-vision">
-            <div class="search-container">
-                <div class="mission-card">
-                    <i class="fas fa-bullseye"
-                        style="font-size: 3rem; color: var(--secondary-color); margin-bottom: 20px;"></i>
-                    <h3 style="color: var(--primary-color); margin-bottom: 15px;" data-i18n="mission_title">Nuestra
-                        Misión</h3>
-                    <p style="color: #666;" data-i18n="mission_desc">Conectar sueños con destinos, brindando
-                        experiencias de viaje accesibles y seguras para todos nuestros clientes en Sudamérica.</p>
-                </div>
-                <div class="vision-card">
-                    <i class="fas fa-eye"
-                        style="font-size: 3rem; color: var(--secondary-color); margin-bottom: 20px;"></i>
-                    <h3 style="color: var(--primary-color); margin-bottom: 15px;" data-i18n="vision_title">Nuestra
-                        Visión</h3>
-                    <p style="color: #666;" data-i18n="vision_desc">Ser la agencia de turismo líder en la región,
-                        reconocida por nuestra innovación, transparencia y excelencia en el servicio al cliente.</p>
+        <!-- MISSION & VISION SECTION -->
+        <section class="mission-vision-wrapper" id="mission-vision">
+            <div class="container">
+                <div class="mission-vision-grid">
+                    <div class="mission-card-premium">
+                        <div class="card-icon-blob">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <h3 data-i18n="mission_title">Nuestra Misión</h3>
+                        <p data-i18n="mission_desc">Conectar sueños con destinos, brindando experiencias de viaje
+                            accesibles y seguras para todos nuestros clientes en Sudamérica.</p>
+                    </div>
+                    <div class="vision-card-premium">
+                        <div class="card-icon-blob">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <h3 data-i18n="vision_title">Nuestra Visión</h3>
+                        <p data-i18n="vision_desc">Ser la agencia de turismo líder en la región, reconocida por nuestra
+                            innovación, transparencia y excelencia en el servicio al cliente.</p>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
 
         <!-- IDENTITY TRAVEL SECTION -->
         <section class="id-travel" id="identity">
@@ -147,18 +155,19 @@
             </div>
         </section>
 
-        <!-- MILES SECTION -->
-        <section class="services-section" id="miles" style="padding-bottom: 0;">
+
+
+        <!-- SEARCH SEARCH SECTION (NEW) -->
+        <section id="search-section" class="search-cta-section">
             <div class="container">
-                <div class="miles-banner">
-                    <div>
-                        <h2 style="font-size: 2rem; margin-bottom: 10px;" data-i18n="miles_title">¿Tienes Millas
-                            Acumuladas?</h2>
-                        <p data-i18n="miles_desc">Compramos, vendemos y gestionamos tus millas para que vueles más
-                            barato.</p>
-                    </div>
-                    <a href="https://wa.me/559591763272?text=Quiero%20vender%20mis%20millas" target="_blank"
-                        class="btn btn-accent" data-i18n="btn_miles_specialist">Especialista en Millas</a>
+                <div class="search-cta-card">
+                    <h2 data-i18n="search_cta_title">Busque su Viaje</h2>
+                    <p data-i18n="search_cta_desc">¡Encuentre el mejor precio ahora y finalice su reserva en segundos en
+                        nuestro portal oficial!</p>
+                    <a href="https://www.comprarviagem.com.br/viajaseguroconvhtours/home" target="_blank"
+                        class="btn btn-primary btn-large">
+                        <i class="fas fa-search"></i> <span data-i18n="btn_search_now">Buscar mi Viaje Ahora</span>
+                    </a>
                 </div>
             </div>
         </section>
@@ -179,6 +188,22 @@
             </div>
         </section>
 
+        <!-- MILES SECTION -->
+        <section class="services-section" id="miles" style="padding-bottom: 0;">
+            <div class="container">
+                <div class="miles-banner">
+                    <div>
+                        <h2 style="font-size: 2rem; margin-bottom: 10px;" data-i18n="miles_title">¿Tienes Millas
+                            Acumuladas?</h2>
+                        <p data-i18n="miles_desc">Compramos, vendemos y gestionamos tus millas para que vueles más
+                            barato.</p>
+                    </div>
+                    <a href="https://wa.me/559591763272?text=Quiero%20vender%20mis%20millas" target="_blank"
+                        class="btn btn-accent" data-i18n="btn_miles_specialist">Especialista en Millas</a>
+                </div>
+            </div>
+        </section>
+
         <!-- PAYMENT SECTION -->
         <section id="payment" class="payment-methods">
             <div class="container">
@@ -187,14 +212,12 @@
                     <a href="#" target="_blank" title="Pagar con Tarjeta"><i class="fab fa-cc-visa"></i></a>
                     <a href="#" target="_blank" title="Pagar con Tarjeta"><i class="fab fa-cc-mastercard"></i></a>
                     <a href="#" target="_blank" title="Pagar con Tarjeta"><i class="fab fa-cc-amex"></i></a>
+                    <a href="https://wa.me/559591763272" target="_blank" title="PIX"><i class="fas fa-pix"></i><span
+                            style="font-size: 1.2rem; font-weight: bold; margin-left: 5px;">PIX</span></a>
                     <a href="#" target="_blank" title="Transferencia"><i class="fas fa-university"></i></a>
-                    <a href="#" target="_blank" title="PIX/QR Code"><i class="fas fa-qrcode"></i></a>
+                    <a href="#" target="_blank" title="QR Code"><i class="fas fa-qrcode"></i></a>
                 </div>
-                <div style="margin-top: 20px;">
-                    <a href="https://link.mercadopago.com.br/SEULINK" target="_blank" class="btn btn-primary">Link de
-                        Pago Seguro</a>
-                </div>
-                <p style="margin-top: 15px; color: #777;" data-i18n="pay_secure">Pagos 100% Seguros y Verificados</p>
+                <p style="margin-top: 25px; color: #777;" data-i18n="pay_secure">Pagos 100% Seguros y Verificados</p>
             </div>
         </section>
 
@@ -224,14 +247,42 @@
             </div>
         </section>
 
+        <!-- WHATSAPP PROMO SECTION -->
+        <section class="whatsapp-promo-section" id="whatsapp-promo">
+            <div class="container">
+                <div class="promo-card">
+                    <div class="promo-image">
+                        <img src="img/whatsapp-promo.jpg" alt="Promociones VH Tours">
+                    </div>
+                    <div class="promo-text">
+                        <h2 data-i18n="wp_title">¡Únete a nuestro Grupo de WhatsApp!</h2>
+                        <p data-i18n="wp_desc">Recibe las mejores promociones aéreas y ofertas exclusivas directamente
+                            en tu celular. ¡No te pierdas ninguna de viajar!</p>
+                        <a href="https://chat.whatsapp.com/KM1HhieqK7zGb7jOSsRDdp" target="_blank"
+                            class="btn btn-whatsapp">
+                            <i class="fab fa-whatsapp"></i> <span data-i18n="btn_join_group">Entrar al Grupo</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- FOOTER -->
         <footer id="contact">
             <div class="container">
                 <div class="footer-grid">
                     <div class="footer-col">
-                        <h3>VH TOURS</h3>
+                        <div class="logo-container" style="margin-bottom: 20px;">
+                            <img src="img/logo-vhtours.jpg" alt="VH Tours Logo" class="logo-img" style="height: 60px;">
+                            <h3 style="margin: 0;">VH TOURS</h3>
+                        </div>
                         <p data-i18n="footer_about">Tu agencia de confianza para viajes internacionales y gestión de
                             millas.</p>
+                        <div style="margin-top: 20px;">
+                            <p style="font-size: 0.9rem; font-weight: bold; color: var(--white);">CNPJ:
+                                33.662.094/0001-13</p>
+                            <p style="font-size: 0.8rem; color: #aaa;">VH TOURS EMPREENDIMENTOS LTDA</p>
+                        </div>
                     </div>
                     <div class="footer-col">
                         <h3 data-i18n="footer_contact">Contacto</h3>
@@ -254,12 +305,26 @@
                             <a href="https://www.facebook.com/profile.php?id=100091712356669" target="_blank"><i
                                     class="fab fa-facebook"></i> Facebook</a>
 
-                            <div style="margin-top: 5px;">
+                            <div style="margin-top: 15px;">
                                 <p style="font-size: 0.85rem; margin-bottom: 5px; color: var(--accent-color);"
                                     data-i18n="whatsapp_cta">Não perca nada! Entre no canal e receba promoções em tempo
                                     real.</p>
-                                <a href="https://www.whatsapp.com/channel/0029Vb6aLwZDuMRm5TtBjH03" target="_blank"
+                                <a href="https://chat.whatsapp.com/KM1HhieqK7zGb7jOSsRDdp" target="_blank"
                                     title="Canal de WhatsApp"><i class="fab fa-whatsapp"></i> Canal de WhatsApp</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer-col certifications-col">
+                        <h3 data-i18n="footer_certifications">Certificaciones</h3>
+                        <div class="cert-images" style="display: flex; flex-direction: column; gap: 15px;">
+                            <img src="img/cadastur-banner.jpg" alt="Cadastur Certificado"
+                                style="border-radius: 5px; max-width: 200px;">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <img src="img/cadastur-qr.jpg" alt="QR Code Cadastur"
+                                    style="width: 80px; border-radius: 5px;">
+                                <p style="font-size: 0.75rem; line-height: 1.3;" data-i18n="footer_qr_desc">Escanee para
+                                    verificar nuestra licencia
+                                    oficial no Ministério do Turismo.</p>
                             </div>
                         </div>
                     </div>
@@ -280,7 +345,7 @@
                     <span data-i18n="footer_copy">© 2026 Vh Tours Empreendimentos Ltda. CNPJ: 33.662.094/0001-13. All
                         rights reserved.</span> |
                     <span data-i18n="footer_dev">Desenvolvido por</span> <a href="#"
-                        style="color: var(--secondary-color); text-decoration: none; font-weight: bold;">LB CONEXÃO
+                        style="color: #ffffff; text-decoration: none; font-weight: bold;">LB CONEXÃO
                         DEV</a>
                 </div>
             </div>
@@ -290,7 +355,7 @@
         <div class="chat-widget">
             <div class="chat-window" id="chatWindow">
                 <div class="chat-header" style="display: flex; align-items: center; gap: 10px;">
-                    <img src="img/vh-logo.jpg" alt="VH Bot" style="width: 30px; height: 30px; border-radius: 50%;">
+                    <img src="img/logo-vhtours.jpg" alt="VH Bot" style="width: 30px; height: 30px; border-radius: 50%;">
                     <span>VH Assistant</span>
                     <span style="cursor: pointer; margin-left: auto;" onclick="toggleChat()">✖</span>
                 </div>
@@ -337,16 +402,36 @@
                     <input type="text" id="input-preco" placeholder="Precio (Ej. $ 500 ou R$ 1000)">
                 </div>
                 <div class="form-group" style="margin-top: 10px;">
-                    <input type="text" id="input-url" placeholder="URL de Imagen">
+                    <input type="text" id="input-parcelado"
+                        placeholder="Precio con Tarjeta (Ej. 06X DE 969,00 No Cartão)">
+                </div>
+                <div class="form-group" style="margin-top: 10px; display: flex; gap: 10px; align-items: center;">
+                    <input type="text" id="input-url" placeholder="URL da Imagem" style="flex: 1;">
+                    <span style="font-weight: bold; color: var(--primary-color);">OU</span>
+                    <label for="input-file" class="btn btn-primary"
+                        style="padding: 10px 15px; font-size: 0.75rem; margin-bottom: 0;">
+                        <i class="fas fa-upload"></i> Subir Imagem
+                    </label>
+                    <input type="file" id="input-file" accept="image/*" style="display: none;"
+                        onchange="handleImageUpload(event)">
+                </div>
+                <!-- Preview da imagem selecionada -->
+                <div id="image-preview-container" style="margin-top: 10px; display: none; text-align: center;">
+                    <img id="image-preview" src="" alt="Previsualização"
+                        style="max-height: 100px; border-radius: 5px; border: 1px solid #ddd;">
+                    <p style="font-size: 0.7rem; color: #666; margin-top: 5px;">Imagem carregada localmente</p>
                 </div>
                 <div class="form-group" style="margin-top: 10px;">
                     <textarea id="input-desc" placeholder="Descripción del destino"
                         style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"></textarea>
                 </div>
 
-                <div style="display: flex; gap: 10px; margin-top: 15px;">
+                <div style="display: flex; gap: 15px; margin-top: 20px; align-items: center;">
                     <button class="btn btn-primary" id="btn-salvar" onclick="salvarDados()">Salvar</button>
-                    <button class="btn btn-accent" onclick="limparFormulario()">Limpar</button>
+                    <button class="btn btn-accent" id="btn-limpar" onclick="limparFormulario()">Limpar</button>
+                    <div id="admin-loader" class="loader-spinner" style="margin: 0; width: 25px; height: 25px;"></div>
+                    <span id="admin-status"
+                        style="font-size: 0.9rem; color: var(--primary-color); display: none;">Processando...</span>
                 </div>
             </div>
 
@@ -358,6 +443,7 @@
                             <tr style="border-bottom: 2px solid var(--primary-color);">
                                 <th style="text-align: left; padding: 10px;">Destino</th>
                                 <th style="text-align: left; padding: 10px;">Precio</th>
+                                <th style="text-align: left; padding: 10px;">Tarjeta</th>
                                 <th style="text-align: left; padding: 10px;">Acciones</th>
                             </tr>
                         </thead>

@@ -3,19 +3,19 @@
  * ==========================================
  */
 :root {
-    /* Paleta de colores basada en VH TOURS (Azul predominante) */
-    --primary-color: #003366;
-    /* Azul Oscuro Institucional */
-    --secondary-color: #00A8E8;
-    /* Azul Claro/Cielo */
-    --accent-color: #FFC107;
-    /* Amarillo para CTA/Alertas */
-    --text-dark: #333333;
+    /* Nova paleta de cores baseada na VH TOURS (Roxo/Lavanda) */
+    --primary-color: #4B0082;
+    /* Deep Indigo */
+    --secondary-color: #9370DB;
+    /* Medium Purple */
+    --accent-color: #BA55D3;
+    /* Medium Orchid */
+    --text-dark: #2D2D2D;
     --text-light: #f4f4f4;
     --white: #ffffff;
-    --light-gray: #f0f2f5;
-    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    --transition: all 0.3s ease;
+    --light-gray: #f8f9fa;
+    --shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
 * {
@@ -68,7 +68,6 @@ textarea {
     text-transform: uppercase;
     font-size: 0.9rem;
     text-align: center;
-    /* Adicionado para garantir alinhamento em links */
 }
 
 .btn-primary {
@@ -77,8 +76,11 @@ textarea {
 }
 
 .btn-primary:hover {
-    background-color: var(--primary-color);
+    background-color: #6A1B9A;
+    /* Roxo mais vibrante */
+    color: #ffffff;
     transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(106, 27, 154, 0.4);
 }
 
 .btn-accent {
@@ -87,7 +89,11 @@ textarea {
 }
 
 .btn-accent:hover {
-    background-color: #e0a800;
+    background-color: #D1C4E9;
+    /* Lavanda claro */
+    color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(147, 112, 219, 0.4);
 }
 
 .section-title {
@@ -100,6 +106,49 @@ textarea {
     font-size: 2.2rem;
     margin-bottom: 0.5rem;
 }
+
+/* Estado de Carregamento nos Botões */
+.btn-loading {
+    position: relative;
+    pointer-events: none;
+    opacity: 0.8 !important;
+    color: transparent !important;
+}
+
+.btn-loading::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 50%;
+    left: 50%;
+    margin-top: -10px;
+    margin-left: -10px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin-loading 0.8s linear infinite;
+}
+
+@keyframes spin-loading {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Spinner específico para áreas onde o texto deve sumir */
+.loader-spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid var(--primary-color);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin-loading 1s linear infinite;
+    display: none;
+    /* Escondido por padrão */
+    margin: 20px auto;
+}
+
 
 .section-title p {
     color: #666;
@@ -142,9 +191,10 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 20px;
-    max-width: 1200px;
+    padding: 15px 40px;
+    max-width: 1500px;
     margin: 0 auto;
+    width: 100%;
 }
 
 .logo-container {
@@ -160,16 +210,21 @@ header {
 }
 
 .nav-brand {
-    font-size: 1.5rem;
-    font-weight: 700;
+    font-size: 1.6rem;
+    font-weight: 800;
     color: var(--primary-color);
     text-decoration: none;
+    margin-right: 20px;
+    white-space: nowrap;
+    letter-spacing: -0.5px;
 }
 
 .nav-menu {
     display: flex;
     gap: 20px;
     align-items: center;
+    flex-wrap: nowrap;
+    /* Impede quebra de linha no menu */
 }
 
 .mobile-close {
@@ -206,7 +261,7 @@ header {
  * ==========================================
  */
 .hero {
-    background: linear-gradient(rgba(0, 51, 102, 0.7), rgba(0, 51, 102, 0.7)), url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+    background: linear-gradient(rgba(75, 0, 130, 0.7), rgba(75, 0, 130, 0.7)), url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
     background-size: cover;
     background-position: center;
     height: 85vh;
@@ -237,58 +292,84 @@ header {
 }
 
 /* * ==========================================
- * BUSCADOR DE VUELOS / MISION
+ * MISION & VISION PREMIUM
  * ==========================================
  */
-.flight-search {
-    margin-top: -50px;
-    position: relative;
-    z-index: 10;
-}
-
 .mission-vision-section {
-    margin-top: -50px;
-    /* Movido de inline */
+    padding: 80px 0 160px;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.92)), url('../img/logo-vhtours.jpg');
+    background-size: 700px;
+    background-position: center 200px;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.mission-vision-wrapper {
+    margin-top: -80px;
     position: relative;
-    /* Movido de inline */
-    z-index: 10;
-    /* Movido de inline */
+    z-index: 100;
+    padding-bottom: 40px;
 }
 
-.search-container {
-    background: var(--white);
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+.mission-vision-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)) auto;
-    gap: 15px;
-    align-items: end;
-}
-
-/* Specific style for mission/vision container which uses the same class but different display */
-.mission-vision-section .search-container {
-    display: flex;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 30px;
+}
+
+.mission-card-premium,
+.vision-card-premium {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 40px 30px;
+    border-radius: 24px;
+    text-align: center;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.mission-card-premium:hover,
+.vision-card-premium:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(75, 0, 130, 0.15);
+}
+
+.card-icon-blob {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+    display: flex;
+    align-items: center;
     justify-content: center;
-    flex-wrap: wrap;
-    grid-template-columns: none;
-    align-items: normal;
+    margin: 0 auto 25px;
+    font-size: 2rem;
+    color: var(--white);
+    animation: blob-morph 8s infinite alternate;
 }
 
-.mission-card {
-    flex: 1;
-    min-width: 300px;
-    text-align: center;
-    padding: 20px;
+@keyframes blob-morph {
+    0% {
+        border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+    }
+
+    100% {
+        border-radius: 70% 30% 30% 70% / 70% 70% 30% 30%;
+    }
 }
 
-.vision-card {
-    flex: 1;
-    min-width: 300px;
-    text-align: center;
-    padding: 20px;
-    border-left: 1px solid #eee;
+.mission-card-premium h3,
+.vision-card-premium h3 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+}
+
+.mission-card-premium p,
+.vision-card-premium p {
+    color: #666;
+    font-size: 0.95rem;
 }
 
 .form-group {
@@ -324,7 +405,12 @@ header {
  */
 .id-travel {
     padding: 80px 0;
-    background-color: var(--light-gray);
+    background-color: #ffffff;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.92)), url('../img/logo-vhtours.jpg');
+    background-size: 600px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 .id-grid {
@@ -398,6 +484,15 @@ header {
     gap: 30px;
 }
 
+/* Background para seção de pacotes para não ficar vazia */
+#packages {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.92)), url('../img/logo-vhtours.jpg');
+    background-size: 800px;
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
 .package-card {
     background: var(--white);
     border-radius: 10px;
@@ -411,7 +506,8 @@ header {
 }
 
 .pkg-img {
-    height: 200px;
+    height: 250px;
+    /* Aumentado de 200px para 250px para melhor visualização */
     overflow: hidden;
 }
 
@@ -419,6 +515,7 @@ header {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    /* Garante que a imagem preencha o espaço sem esticar */
 }
 
 .pkg-details {
@@ -429,6 +526,21 @@ header {
     color: var(--secondary-color);
     font-size: 1.5rem;
     font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.pkg-card-price {
+    font-size: 0.95rem;
+    color: #555;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 5px;
+    font-weight: 600;
+}
+
+.pkg-card-price i {
+    color: var(--primary-color);
 }
 
 /* * ==========================================
@@ -436,11 +548,12 @@ header {
  * ==========================================
  */
 .payment-methods {
-    padding: 80px 0;
+    padding: 100px 0;
     text-align: center;
-    background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('https://images.unsplash.com/photo-1526772662000-3f88f10405ff?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
-    background-size: cover;
+    background-image: linear-gradient(rgba(248, 249, 250, 0.95), rgba(248, 249, 250, 0.95)), url('../img/logo-vhtours.jpg');
+    background-size: 800px;
     background-position: center;
+    background-repeat: no-repeat;
     background-attachment: fixed;
     position: relative;
 }
@@ -472,7 +585,8 @@ footer {
 
 .footer-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    /* Aumentado o min para forçar quebra melhor */
     gap: 40px;
     margin-bottom: 40px;
 }
@@ -480,6 +594,13 @@ footer {
 .footer-col h3 {
     color: var(--white);
     margin-bottom: 20px;
+    font-size: 1.2rem;
+}
+
+.certifications-col {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    border-radius: 15px;
 }
 
 .footer-col ul li {
@@ -787,5 +908,166 @@ footer {
     .vision-card {
         border: none;
         border-bottom: 1px solid #eee;
+    }
+}
+
+/* * ==========================================
+ * NEW SECTIONS: SEARCH CTA & CERTIFICATIONS
+ * ==========================================
+ */
+.search-cta-section {
+    padding: 80px 0;
+    background-color: #ffffff;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.90), rgba(255, 255, 255, 0.90)), url('../img/logo-vhtours.jpg');
+    background-size: 1000px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.search-cta-card {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    padding: 50px;
+    border-radius: 20px;
+    text-align: center;
+    color: var(--white);
+    box-shadow: var(--shadow);
+}
+
+.search-cta-card h2 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+.search-cta-card p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    opacity: 0.9;
+}
+
+.btn-large {
+    padding: 15px 40px;
+    font-size: 1.1rem;
+    background-color: var(--white);
+    color: var(--primary-color);
+}
+
+.btn-large:hover {
+    background-color: var(--light-gray);
+    color: var(--primary-color) !important;
+    /* Mantém o texto escuro e visível */
+    transform: scale(1.05);
+}
+
+.certifications-col .cert-images img {
+    transition: var(--transition);
+}
+
+.certifications-col .cert-images img:hover {
+    transform: scale(1.02);
+}
+
+.logo-container .logo-img {
+    transition: var(--transition);
+}
+
+.logo-container:hover .logo-img {
+    transform: rotate(5deg) scale(1.1);
+}
+
+/* --- WHATSAPP PROMO SECTION --- */
+.whatsapp-promo-section {
+    padding: 50px 0;
+    background: linear-gradient(135deg, #fdfcfd 0%, #f3e5f5 100%);
+}
+
+.promo-card {
+    display: flex;
+    align-items: center;
+    gap: 35px;
+    background: var(--white);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: var(--shadow);
+    max-width: 850px;
+    margin: 0 auto;
+    border: 1px solid rgba(75, 0, 130, 0.1);
+}
+
+.promo-image {
+    flex: 1;
+    max-width: 320px;
+}
+
+.promo-image img {
+    width: 100%;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    transition: var(--transition);
+}
+
+.promo-card:hover .promo-image img {
+    transform: scale(1.02);
+}
+
+.promo-text {
+    flex: 1;
+}
+
+.promo-text h2 {
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    margin-bottom: 12px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.promo-text p {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 25px;
+}
+
+.btn-whatsapp {
+    background-color: #25D366;
+    color: var(--white);
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: var(--transition);
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.25);
+}
+
+.btn-whatsapp:hover {
+    background-color: #128C7E;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+    color: var(--white) !important;
+}
+
+/* Responsividade */
+@media (max-width: 992px) {
+    .promo-card {
+        flex-direction: column;
+        text-align: center;
+        gap: 30px;
+        padding: 30px 20px;
+    }
+
+    .promo-image {
+        max-width: 100%;
+        order: 1;
+    }
+
+    .promo-text {
+        order: 2;
+    }
+
+    .promo-text h2 {
+        font-size: 1.8rem;
     }
 }

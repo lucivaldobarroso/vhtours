@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VH TOURS | Viaja más, pagando menos</title>
+
+    <!-- External Libs -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS -->
+  <link rel="stylesheet" crossorigin href="/assets/index-BuzG2mCe.css">
+</head>
+
+<body>
+
+    <!-- LOGIN MODAL -->
+    <div id="loginModal" class="login-overlay">
+        <div class="login-box">
+            <h2 style="color: var(--primary-color); margin-bottom: 20px;">Acceso Empleados</h2>
+            <div class="form-group" style="margin-bottom: 15px;">
+                <input type="text" id="user" placeholder="Usuario" onkeypress="handleLoginKey(event)">
+            </div>
+            <div class="form-group" style="margin-bottom: 20px;">
+                <input type="password" id="pass" placeholder="Contraseña" onkeypress="handleLoginKey(event)">
+            </div>
+            <button class="btn btn-primary" id="btn-login" style="width: 100%;" onclick="logar()">Entrar</button>
+            <div id="login-loader" class="loader-spinner" style="margin-top: 15px;"></div>
+            <p id="login-status"
+                style="margin-top: 10px; font-size: 0.85rem; color: var(--primary-color); display: none;">
+                Autenticando...</p>
+            <p style="margin-top: 15px; font-size: 0.8rem; cursor: pointer; color: #666;" onclick="closeLogin()">
+                Cancelar</p>
+        </div>
+    </div>
+
+    <div id="public-site">
+
+        <!-- HEADER -->
+        <header>
+            <div class="top-bar container" id="secao-login">
+                <a href="#" onclick="openLogin()">Área del Empleado <i class="fas fa-lock"></i></a>
+            </div>
+            <nav class="navbar container">
+                <div class="logo-container">
+                    <img src="/assets/logo-vhtours-eADJPAWq.jpg" alt="VH Tours Logo" class="logo-img">
+                    <a href="#" class="nav-brand">VH TOURS</a>
+                </div>
+                <div class="hamburger" onclick="toggleMenu()">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <ul class="nav-menu" id="nav-links">
+                    <li class="mobile-close"><a href="#" onclick="toggleMenu()">✖</a></li>
+                    <li><a href="#home" class="nav-link" data-i18n="nav_home" onclick="toggleMenu()">Inicio</a></li>
+                    <li><a href="#mission-vision" class="nav-link" data-i18n="nav_mission" onclick="toggleMenu()">Misión
+                            y Visión</a></li>
+                    <li><a href="#search-section" class="nav-link" data-i18n="nav_search"
+                            onclick="toggleMenu()">Pesquisa sua Viagem</a></li>
+                    <li><a href="#packages" class="nav-link" data-i18n="nav_packages"
+                            onclick="toggleMenu()">Paquetes</a></li>
+                    <li><a href="#miles" class="nav-link" data-i18n="nav_miles" onclick="toggleMenu()">Millas</a></li>
+                    <li><a href="#payment" data-i18n="nav_payment" onclick="toggleMenu()">Pagos</a></li>
+                    <li><a href="#instagram" data-i18n="nav_instagram" onclick="toggleMenu()">Instagram</a></li>
+                    <li><a href="#contact" data-i18n="nav_contact" onclick="toggleMenu()">Contacto</a></li>
+                    <li><select class="lang-select" onchange="changeLanguage(this.value)">
+                            <option value="es">🇪🇸 ES</option>
+                            <option value="pt">🇧🇷 PT</option>
+                            <option value="en">🇺🇸 EN</option>
+                        </select></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- HERO SECTION -->
+        <section id="home" class="hero">
+            <div class="hero-content container">
+                <h1 data-i18n="hero_title">Viaja más, pagando menos, con VH TOURS</h1>
+                <p data-i18n="hero_subtitle">Expertos en conectar destinos con confianza y los mejores precios del
+                    mercado.</p>
+                <div class="hero-buttons">
+                    <a href="https://wa.me/559591763272?text=Hola,%20quisiera%20comprar%20un%20pasaje" target="_blank"
+                        class="btn btn-primary" data-i18n="btn_buy_ticket">Comprar Pasaje</a>
+                    <a href="https://linkfly.to/vhtours" target="_blank" class="btn btn-accent"
+                        data-i18n="btn_advisor">Hablar con Asesor</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- MISSION & VISION SECTION -->
+        <section class="mission-vision-wrapper" id="mission-vision">
+            <div class="container">
+                <div class="mission-vision-grid">
+                    <div class="mission-card-premium">
+                        <div class="card-icon-blob">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <h3 data-i18n="mission_title">Nuestra Misión</h3>
+                        <p data-i18n="mission_desc">Conectar sueños con destinos, brindando experiencias de viaje
+                            accesibles y seguras para todos nuestros clientes en Sudamérica.</p>
+                    </div>
+                    <div class="vision-card-premium">
+                        <div class="card-icon-blob">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <h3 data-i18n="vision_title">Nuestra Visión</h3>
+                        <p data-i18n="vision_desc">Ser la agencia de turismo líder en la región, reconocida por nuestra
+                            innovación, transparencia y excelencia en el servicio al cliente.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- IDENTITY TRAVEL SECTION -->
+        <section class="id-travel" id="identity">
+            <div class="container">
+                <div class="section-title">
+                    <h2 data-i18n="id_title">Viaja solo con tu Cédula</h2>
+                    <p data-i18n="id_desc">Explora Sudamérica sin necesidad de pasaporte. Facilitamos tu viaje por el
+                        MERCOSUR.</p>
+                </div>
+
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <div class="benefit-icon"><i class="fas fa-id-card"></i></div>
+                        <h3 data-i18n="benefit_1_title">Sin Pasaporte</h3>
+                        <p style="font-size: 0.9rem; color: #666;" data-i18n="benefit_1_desc">Viaja solo con tu
+                            documento de identidad vigente.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon"><i class="fas fa-globe-americas"></i></div>
+                        <h3 data-i18n="benefit_2_title">MERCOSUR</h3>
+                        <p style="font-size: 0.9rem; color: #666;" data-i18n="benefit_2_desc">Acceso a Brasil,
+                            Argentina, Uruguay, Paraguay, Chile y Colombia.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon"><i class="fas fa-clock"></i></div>
+                        <h3 data-i18n="benefit_3_title">Menos Burocracia</h3>
+                        <p style="font-size: 0.9rem; color: #666;" data-i18n="benefit_3_desc">Trámites migratorios más
+                            ágiles y sencillos.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon"><i class="fas fa-shield-alt"></i></div>
+                        <h3 data-i18n="benefit_4_title">Seguridad</h3>
+                        <p style="font-size: 0.9rem; color: #666;" data-i18n="benefit_4_desc">Asesoría completa para que
+                            viajes tranquilo.</p>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 40px;">
+                    <a href="https://wa.me/559591763272?text=Información%20sobre%20viajes%20con%20cédula"
+                        target="_blank" class="btn btn-primary" data-i18n="btn_more_info">Más Información</a>
+                </div>
+            </div>
+        </section>
+
+
+
+        <!-- SEARCH SEARCH SECTION (NEW) -->
+        <section id="search-section" class="search-cta-section">
+            <div class="container">
+                <div class="search-cta-card">
+                    <h2 data-i18n="search_cta_title">Busque su Viaje</h2>
+                    <p data-i18n="search_cta_desc">¡Encuentre el mejor precio ahora y finalice su reserva en segundos en
+                        nuestro portal oficial!</p>
+                    <a href="https://www.comprarviagem.com.br/viajaseguroconvhtours/home" target="_blank"
+                        class="btn btn-primary btn-large">
+                        <i class="fas fa-search"></i> <span data-i18n="btn_search_now">Buscar mi Viaje Ahora</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- PACKAGES SECTION -->
+        <section class="services-section" id="packages" style="padding-top: 20px;">
+            <div class="container">
+
+                <div class="section-title">
+                    <h2 data-i18n="pkg_title">Paquetes Destacados</h2>
+                    <p data-i18n="pkg_subtitle">Las mejores ofertas seleccionadas para ti.</p>
+                </div>
+
+                <div class="packages-grid" id="packages-container">
+                    <!-- Populated by JS -->
+                </div>
+
+            </div>
+        </section>
+
+        <!-- MILES SECTION -->
+        <section class="services-section" id="miles" style="padding-bottom: 0;">
+            <div class="container">
+                <div class="miles-banner">
+                    <div>
+                        <h2 style="font-size: 2rem; margin-bottom: 10px;" data-i18n="miles_title">¿Tienes Millas
+                            Acumuladas?</h2>
+                        <p data-i18n="miles_desc">Compramos, vendemos y gestionamos tus millas para que vueles más
+                            barato.</p>
+                    </div>
+                    <a href="https://wa.me/559591763272?text=Quiero%20vender%20mis%20millas" target="_blank"
+                        class="btn btn-accent" data-i18n="btn_miles_specialist">Especialista en Millas</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAYMENT SECTION -->
+        <section id="payment" class="payment-methods">
+            <div class="container">
+                <h3 data-i18n="pay_methods">Medios de Pago Flexibles</h3>
+                <div class="payment-icons">
+                    <a href="#" target="_blank" title="Pagar con Tarjeta"><i class="fab fa-cc-visa"></i></a>
+                    <a href="#" target="_blank" title="Pagar con Tarjeta"><i class="fab fa-cc-mastercard"></i></a>
+                    <a href="#" target="_blank" title="Pagar con Tarjeta"><i class="fab fa-cc-amex"></i></a>
+                    <a href="https://wa.me/559591763272" target="_blank" title="PIX"><i class="fas fa-pix"></i><span
+                            style="font-size: 1.2rem; font-weight: bold; margin-left: 5px;">PIX</span></a>
+                    <a href="#" target="_blank" title="Transferencia"><i class="fas fa-university"></i></a>
+                    <a href="#" target="_blank" title="QR Code"><i class="fas fa-qrcode"></i></a>
+                </div>
+                <p style="margin-top: 25px; color: #777;" data-i18n="pay_secure">Pagos 100% Seguros y Verificados</p>
+            </div>
+        </section>
+
+        <!-- INSTAGRAM FEED SECTION -->
+        <section class="instagram-feed" id="instagram">
+            <div class="container">
+                <div class="section-title">
+                    <h2 style="color: var(--primary-color);" data-i18n="insta_title">Síguenos en Instagram</h2>
+                    <p data-i18n="insta_desc">Mantente al día con nuestras últimas ofertas y destinos @vhtours_br</p>
+                </div>
+                <div class="insta-wrapper">
+                    <button class="insta-nav prev" onclick="scrollInsta(-1)" aria-label="Anterior">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="insta-nav next" onclick="scrollInsta(1)" aria-label="Siguiente">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                    <div class="insta-grid" id="instaGrid">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 40px;">
+                    <a href="https://www.instagram.com/vhtours_br/" target="_blank" class="btn btn-primary"><i
+                            class="fab fa-instagram"></i> <span data-i18n="btn_insta_more">Ver más en
+                            Instagram</span></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- WHATSAPP PROMO SECTION -->
+        <section class="whatsapp-promo-section" id="whatsapp-promo">
+            <div class="container">
+                <div class="promo-card">
+                    <div class="promo-image">
+                        <img src="/assets/whatsapp-promo-DsqRTh40.jpg" alt="Promociones VH Tours">
+                    </div>
+                    <div class="promo-text">
+                        <h2 data-i18n="wp_title">¡Únete a nuestro Grupo de WhatsApp!</h2>
+                        <p data-i18n="wp_desc">Recibe las mejores promociones aéreas y ofertas exclusivas directamente
+                            en tu celular. ¡No te pierdas ninguna de viajar!</p>
+                        <a href="https://chat.whatsapp.com/KM1HhieqK7zGb7jOSsRDdp" target="_blank"
+                            class="btn btn-whatsapp">
+                            <i class="fab fa-whatsapp"></i> <span data-i18n="btn_join_group">Entrar al Grupo</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer id="contact">
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-col">
+                        <div class="logo-container" style="margin-bottom: 20px;">
+                            <img src="/assets/logo-vhtours-eADJPAWq.jpg" alt="VH Tours Logo" class="logo-img" style="height: 60px;">
+                            <h3 style="margin: 0;">VH TOURS</h3>
+                        </div>
+                        <p data-i18n="footer_about">Tu agencia de confianza para viajes internacionales y gestión de
+                            millas.</p>
+                        <div style="margin-top: 20px;">
+                            <p style="font-size: 0.9rem; font-weight: bold; color: var(--white);">CNPJ:
+                                33.662.094/0001-13</p>
+                            <p style="font-size: 0.8rem; color: #aaa;">VH TOURS EMPREENDIMENTOS LTDA</p>
+                        </div>
+                    </div>
+                    <div class="footer-col">
+                        <h3 data-i18n="footer_contact">Contacto</h3>
+                        <ul>
+                            <li><a href="https://wa.me/559591763272" target="_blank"><i class="fab fa-whatsapp"></i> +55
+                                    95 9176-3272</a></li>
+                            <li><i class="fas fa-envelope"></i>vhtoursviajes.ga.@gmail.com</li>
+                            <li><i class="fas fa-map-marker-alt"></i> Av brigadeiro eduardo gomes 1082, Sala 01, Boa
+                                Vista, RR</li>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h3 data-i18n="footer_social">Síguenos</h3>
+                        <div class="social-icons"
+                            style="display: flex; flex-direction: column; gap: 10px; align-items: start;">
+                            <a href="https://www.instagram.com/vhtours_br/" target="_blank"><i
+                                    class="fab fa-instagram"></i>
+                                Instagram (@vhtours_br)</a>
+                            <a href="https://www.facebook.com/profile.php?id=100091712356669" target="_blank"><i
+                                    class="fab fa-facebook"></i> Facebook</a>
+
+                            <div style="margin-top: 15px;">
+                                <p style="font-size: 0.85rem; margin-bottom: 5px; color: var(--accent-color);"
+                                    data-i18n="whatsapp_cta">Não perca nada! Entre no canal e receba promoções em tempo
+                                    real.</p>
+                                <a href="https://chat.whatsapp.com/KM1HhieqK7zGb7jOSsRDdp" target="_blank"
+                                    title="Canal de WhatsApp"><i class="fab fa-whatsapp"></i> Canal de WhatsApp</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer-col certifications-col">
+                        <h3 data-i18n="footer_certifications">Certificaciones</h3>
+                        <div class="cert-images" style="display: flex; flex-direction: column; gap: 15px;">
+                            <img src="/assets/cadastur-banner-BVZYSkXB.jpg" alt="Cadastur Certificado"
+                                style="border-radius: 5px; max-width: 200px;">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <img src="/assets/cadastur-qr-CB3mlBNw.jpg" alt="QR Code Cadastur"
+                                    style="width: 80px; border-radius: 5px;">
+                                <p style="font-size: 0.75rem; line-height: 1.3;" data-i18n="footer_qr_desc">Escanee para
+                                    verificar nuestra licencia
+                                    oficial no Ministério do Turismo.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="map-section" style="margin: 40px 0; text-align: center;">
+                    <h3 id="map-location-title" style="color: var(--white); margin-bottom: 20px;" data-i18n="map_title">
+                        Nuestra Ubicación</h3>
+                    <div style="max-width: 100%; overflow: hidden; border-radius: 10px; box-shadow: var(--shadow);">
+                        <iframe id="google-map-iframe"
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d249.0570261361464!2d-60.671361399999995!3d2.8416136!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8d93095bd98d372d%3A0xb4a94e46ebd49aa7!2sVH%20TOURS!5e0!3m2!1spt-BR!2sbr!4v1768608793680!5m2!1spt-BR!2sbr"
+                            width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+
+                <div style="text-align: center; border-top: 1px solid #333; padding-top: 20px; font-size: 0.8rem;">
+                    <span data-i18n="footer_copy">© 2026 Vh Tours Empreendimentos Ltda. CNPJ: 33.662.094/0001-13. All
+                        rights reserved.</span> |
+                    <span data-i18n="footer_dev">Desenvolvido por</span> <a href="#"
+                        style="color: #ffffff; text-decoration: none; font-weight: bold;">LB CONEXÃO
+                        DEV</a>
+                </div>
+            </div>
+        </footer>
+
+        <!-- CHAT WIDGET -->
+        <div class="chat-widget">
+            <div class="chat-window" id="chatWindow">
+                <div class="chat-header" style="display: flex; align-items: center; gap: 10px;">
+                    <img src="/assets/logo-vhtours-eADJPAWq.jpg" alt="VH Bot" style="width: 30px; height: 30px; border-radius: 50%;">
+                    <span>VH Assistant</span>
+                    <span style="cursor: pointer; margin-left: auto;" onclick="toggleChat()">✖</span>
+                </div>
+                <div class="chat-body" id="chatBody">
+                    <div class="chat-msg bot-msg" data-i18n="chat_welcome">¡Hola! Soy la IA de VH Tours. ¿En qué puedo
+                        ayudarte hoy?</div>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" id="chatInput" placeholder="..." onkeypress="handleChat(event)">
+                    <button onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+                </div>
+            </div>
+            <div class="chat-btn" onclick="toggleChat()">
+                <i class="fas fa-comment-dots"></i>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ADMIN PANEL -->
+    <section id="admin-panel">
+        <div class="container">
+            <div class="admin-header">
+                <div>
+                    <h2>Panel Administrativo</h2>
+                    <p>Bienvenido, Admin</p>
+                </div>
+                <div>
+                    <button class="btn btn-primary" onclick="backToSite()">Ver Sitio</button>
+                    <button class="btn btn-accent" onclick="logout()">Cerrar Sesión</button>
+                </div>
+            </div>
+
+            <div class="admin-card" id="secao-painel">
+                <h3>Gestionar Paquetes</h3>
+                <br>
+                <!-- Campo oculto para saber se estamos editando uma linha -->
+                <input type="hidden" id="input-linha">
+
+                <div class="form-group">
+                    <input type="text" id="input-destino" placeholder="Destino (Ej. Miami)">
+                </div>
+                <div class="form-group" style="margin-top: 10px;">
+                    <input type="text" id="input-preco" placeholder="Precio (Ej. $ 500 ou R$ 1000)">
+                </div>
+                <div class="form-group" style="margin-top: 10px;">
+                    <input type="text" id="input-parcelado"
+                        placeholder="Precio con Tarjeta (Ej. 06X DE 969,00 No Cartão)">
+                </div>
+                <div class="form-group" style="margin-top: 10px; display: flex; gap: 10px; align-items: center;">
+                    <input type="text" id="input-url" placeholder="URL da Imagem" style="flex: 1;">
+                    <span style="font-weight: bold; color: var(--primary-color);">OU</span>
+                    <label for="input-file" class="btn btn-primary"
+                        style="padding: 10px 15px; font-size: 0.75rem; margin-bottom: 0;">
+                        <i class="fas fa-upload"></i> Subir Imagem
+                    </label>
+                    <input type="file" id="input-file" accept="image/*" style="display: none;"
+                        onchange="handleImageUpload(event)">
+                </div>
+                <!-- Preview da imagem selecionada -->
+                <div id="image-preview-container" style="margin-top: 10px; display: none; text-align: center;">
+                    <img id="image-preview" src="" alt="Previsualização"
+                        style="max-height: 100px; border-radius: 5px; border: 1px solid #ddd;">
+                    <p style="font-size: 0.7rem; color: #666; margin-top: 5px;">Imagem carregada localmente</p>
+                </div>
+                <div class="form-group" style="margin-top: 10px;">
+                    <textarea id="input-desc" placeholder="Descripción del destino"
+                        style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"></textarea>
+                </div>
+
+                <div style="display: flex; gap: 15px; margin-top: 20px; align-items: center;">
+                    <button class="btn btn-primary" id="btn-salvar" onclick="salvarDados()">Salvar</button>
+                    <button class="btn btn-accent" id="btn-limpar" onclick="limparFormulario()">Limpar</button>
+                    <div id="admin-loader" class="loader-spinner" style="margin: 0; width: 25px; height: 25px;"></div>
+                    <span id="admin-status"
+                        style="font-size: 0.9rem; color: var(--primary-color); display: none;">Processando...</span>
+                </div>
+            </div>
+
+            <div class="admin-card">
+                <h3>Paquetes Activos</h3>
+                <div class="table-responsive" style="margin-top: 20px;">
+                    <table id="tabela-destinos" style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="border-bottom: 2px solid var(--primary-color);">
+                                <th style="text-align: left; padding: 10px;">Destino</th>
+                                <th style="text-align: left; padding: 10px;">Precio</th>
+                                <th style="text-align: left; padding: 10px;">Tarjeta</th>
+                                <th style="text-align: left; padding: 10px;">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Custom App Script -->
+    <script src="js/app.js"></script>
+</body>
+
+</html>

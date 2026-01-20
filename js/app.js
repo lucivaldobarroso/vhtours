@@ -13,7 +13,6 @@ async function renderPackages() {
         const res = await fetch(URL_API + "?action=getDestinos");
         const json = await res.json();
 
-        console.log("Dados recebidos (Pacotes):", json);
 
         // O script pode retornar o array diretamente ou dentro de .data
         const destinos = Array.isArray(json) ? json : (json.data || []);
@@ -150,7 +149,7 @@ function scrollInsta(direction) {
 const translations = {
     es: {
         nav_home: "Inicio", nav_mission: "Misión y Visión", nav_packages: "Paquetes", nav_miles: "Millas", nav_payment: "Pagos", nav_instagram: "Instagram", nav_contact: "Contacto",
-        hero_title: "Viaja más, pagando menos, con VH TOURS", hero_subtitle: "Expertos en conectar destinos con confianza y los melhores precios del mercado.",
+        hero_title: "Viaja más, pagando menos, con VH TOURS", hero_slogan: "El Momento de Viajar es Ahora", hero_subtitle: "Expertos en conectar destinos con confianza y los mejores precios del mercado.",
         btn_buy_ticket: "Comprar Pasaje", btn_advisor: "Hablar con Asesor",
         lbl_origin: "Origen", lbl_dest: "Destino", lbl_date_out: "Depart", lbl_date_ret: "Return", lbl_passengers: "Pasajeros", btn_search: "Buscar Pasajes",
         ph_city: "Ciudad",
@@ -195,7 +194,7 @@ const translations = {
     },
     pt: {
         nav_home: "Início", nav_mission: "Missão e Visão", nav_packages: "Pacotes", nav_miles: "Milhas", nav_payment: "Pagamentos", nav_instagram: "Instagram", nav_contact: "Contato",
-        hero_title: "Viaje mais, pagando menos, com VH TOURS", hero_subtitle: "Especialistas em conectar destinos com confiança e os melhores preços do mercado.",
+        hero_title: "Viaje mais, pagando menos, com VH TOURS", hero_slogan: "O Momento de Viajar é Agora", hero_subtitle: "Especialistas em conectar destinos com confiança e os melhores preços do mercado.",
         btn_buy_ticket: "Comprar Passagem", btn_advisor: "Falar com Consultor",
         lbl_origin: "Origem", lbl_dest: "Destino", lbl_date_out: "Ida", lbl_date_ret: "Volta", lbl_passengers: "Passageiros", btn_search: "Buscar Passagens",
         ph_city: "Cidade",
@@ -240,7 +239,7 @@ const translations = {
     },
     en: {
         nav_home: "Home", nav_mission: "Mission & Vision", nav_packages: "Packages", nav_miles: "Miles", nav_payment: "Payments", nav_instagram: "Instagram", nav_contact: "Contact",
-        hero_title: "Travel more, pay less, with VH TOURS", hero_subtitle: "Experts connecting destinations with trust and the best market prices.",
+        hero_title: "Travel more, pay less, with VH TOURS", hero_slogan: "The Moment to Travel is Now", hero_subtitle: "Experts connecting destinations with trust and the best market prices.",
         btn_buy_ticket: "Buy Ticket", btn_advisor: "Talk to Advisor",
         lbl_origin: "Origin", lbl_dest: "Destination", lbl_date_out: "Depart", lbl_date_ret: "Return", lbl_passengers: "Passengers", btn_search: "Search Flights",
         ph_city: "City",
@@ -365,7 +364,6 @@ function carregarTabelaAdmin() {
     fetch(`${URL_API}?action=getDestinos`)
         .then(res => res.json())
         .then(res => {
-            console.log("Dados recebidos (Admin):", res);
             const corpo = document.querySelector('#tabela-destinos tbody');
             if (!corpo) return;
             corpo.innerHTML = "";
